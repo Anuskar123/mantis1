@@ -1,7 +1,7 @@
-import z_score
-import knn
-import naive_bayes
-import bloom
+import engines.z_score as z_score
+import engines.knn as knn
+import engines.naive_bayes as naive_bayes
+import engines.bloom as bloom
 import time
 import math
 

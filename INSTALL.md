@@ -10,14 +10,14 @@ However, you can "install" it as a system command for convenience.
 
 ## Step 1: Download & Prepare
 1.  Copy the `mantis/` folder to your Linux machine (e.g., to your Home directory).
-2.  Open a terminal inside the folder.
+2.  Open a terminal inside the `mantis/src/` folder.
 
 ## Step 2: Install to System (Optional)
 To run MANTIS from anywhere (like a real tool), follow these steps:
 
 1.  **Move to /opt**:
     ```bash
-    sudo mv mantis /opt/mantis
+    sudo mv mantis/src /opt/mantis
     ```
 
 2.  **Make Executable**:
@@ -45,8 +45,15 @@ sudo mantis --remote 192.168.1.50
 ```
 
 ## Uninstallation
-To remove MANTIS:
+To remove MANTIS from your system completely, you can use the provided uninstall script:
+```bash
+cd src
+sudo ./uninstall.sh
+```
+
+Alternatively, you can remove it manually:
 ```bash
 sudo rm /usr/bin/mantis
+sudo rm /usr/bin/mantis-siem
 sudo rm -rf /opt/mantis
 ```

@@ -26,6 +26,7 @@ Clone this repository or copy the `mantis/` folder to your Linux machine.
 
 ### Automated Install (Recommended)
 ```bash
+cd src
 sudo ./install.sh
 ```
 
@@ -42,14 +43,16 @@ For detailed instructions, see our **[How to Run Guide](HOW_TO_RUN.md)**.
 Run MANTIS on a single machine. Alerts appear in the console and are logged to `mantis_logs.csv`.
 
 ```bash
+cd src
 sudo python3 main.py
 ```
 
 ### 2. Enterprise SIEM Mode (Web Dashboard)
-Run the central dashboard on one machine (e.g., Ubuntu):
+Run the central dashboard on one machine (e.g., Ubuntu). Note: You can also just select the "Web Dashboard" option when running `main.py`.
 
 ```bash
-python3 siem.py
+cd src
+python3 dashboard_ui/siem.py
 ```
 *   **Web Interface**: Open `http://localhost:8080` in your browser.
 *   **UDP Listener**: Listening on Port 9999.
@@ -57,11 +60,13 @@ python3 siem.py
 **Connect Sensors:**
 On your other machines (sensors), run:
 ```bash
+cd src
 sudo python3 main.py --remote <SIEM_IP> --port 9999
 ```
 
 ### 3. Help
 ```bash
+cd src
 sudo python3 main.py --help
 ```
 
@@ -69,7 +74,7 @@ sudo python3 main.py --help
 If you clone this repo:
 ```bash
 git clone https://github.com/YOUR_USERNAME/MANTIS.git
-cd MANTIS
+cd MANTIS/src
 sudo chmod +x main.py
 sudo ./main.py
 ```

@@ -6,12 +6,17 @@ import os
 
 class ActiveDefense:
     def __init__(self):
+        print("[*] Active Defense Module Initialized. Ready to engage.")
         self.blocked_ips = set()
+        self.whitelist = ['127.0.0.1', '0.0.0.0'] # Never block the host itself
         
     def block_ip(self, ip_address):
         """
-        Executes a system command to block an IP via iptables.
+        Dynamically adds an iptables rule to drop all traffic from the IP.
         """
+        if ip_address in self.whitelist:
+            return # Safelist trigger, do not block
+
         if ip_address in self.blocked_ips:
             return # Already blocked
             

@@ -5,10 +5,12 @@ This guide explains how to start the MANTIS Intrusion Detection System in differ
 ## 🚨 IMPORTANT: First-Time Setup
 If you see errors like `'python3\r': No such file`, run this fix command first:
 ```bash
+cd src
 sed -i 's/\r$//' *.py install.sh
 ```
 Then install:
 ```bash
+cd src
 sudo ./install.sh
 ```
 
@@ -21,7 +23,7 @@ Best for testing or protecting a single laptop/server.
 ```bash
 sudo mantis
 ```
-*(Or without install: `sudo python3 main.py`)*
+*(Or without install: `cd src && sudo python3 main.py`)*
 
 ### What it does:
 1.  Starts the **Sensor** to sniff traffic on your network interface.
@@ -37,9 +39,9 @@ Best for monitoring multiple machines (Clients) from one central dashboard (Serv
 ### Step A: Start the Server (Dashboard)
 On the machine where you want to **see** the logs (e.g., your Admin Laptop):
 ```bash
-mantis-server
+mantis-siem
 ```
-*(Or without install: `python3 log_server.py`)*
+*(Or without install: `cd src && python3 dashboard_ui/siem.py`)*
 
 *Note the IP address of this machine (e.g., `192.168.1.50`).*
 

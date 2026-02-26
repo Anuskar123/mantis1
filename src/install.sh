@@ -45,9 +45,8 @@ fi
 
 # 4.5. Fix Windows Line Endings (CRLF -> LF)
 if command -v sed >/dev/null 2>&1; then
-    echo "[*] Converting Line Endings..."
-    sed -i 's/\r$//' "$INSTALL_DIR"/*.py 2>/dev/null
-    sed -i 's/\r$//' "$INSTALL_DIR"/*.md 2>/dev/null
+    echo "[*] Converting Line Endings (Recursively)..."
+    find "$INSTALL_DIR" -type f \( -name "*.py" -o -name "*.sh" -o -name "*.md" \) -exec sed -i 's/\r$//' {} \; 2>/dev/null
     sed -i 's/\r$//' "$INSTALL_DIR"/LICENSE 2>/dev/null
 else
     echo "[!] Warning: 'sed' not found. You might have line-ending issues."
@@ -56,9 +55,9 @@ fi
 # 5. Set Permissions
 echo "[*] Setting execute permissions..."
 chmod +x "$INSTALL_DIR/main.py"
-chmod +x "$INSTALL_DIR/log_server.py"
-chmod +x "$INSTALL_DIR/siem.py"
-chmod +x "$INSTALL_DIR/sensor.py"
+# chmod +x "$INSTALL_DIR/log_server.py" # Removed legacy file
+chmod +x "$INSTALL_DIR/dashboard_ui/siem.py"
+chmod +x "$INSTALL_DIR/sensor_node/sensor.py"
 
 # 6. Create Symlinks
 echo "[*] Creating symlinks in $BIN_DIR..."
@@ -67,19 +66,14 @@ echo "[*] Creating symlinks in $BIN_DIR..."
 if [ -L "$BIN_DIR/mantis" ]; then
     rm "$BIN_DIR/mantis"
 fi
-ln -s "$INSTALL_DIR/main.py" "$BIN_DIR/mantis"
+ln -sf "$INSTALL_DIR/main.py" "$BIN_DIR/mantis"
 
-# Server (Legacy Log Server)
-if [ -L "$BIN_DIR/mantis-server" ]; then
-    rm "$BIN_DIR/mantis-server"
-fi
-ln -s "$INSTALL_DIR/log_server.py" "$BIN_DIR/mantis-server"
 
 # SIEM (New Web Dashboard)
 if [ -L "$BIN_DIR/mantis-siem" ]; then
     rm "$BIN_DIR/mantis-siem"
 fi
-ln -s "$INSTALL_DIR/siem.py" "$BIN_DIR/mantis-siem"
+ln -sf "$INSTALL_DIR/dashboard_ui/siem.py" "$BIN_DIR/mantis-siem"
 
 # 7. Final Check
 if command -v mantis >/dev/null 2>&1; then
@@ -90,7 +84,7 @@ if command -v mantis >/dev/null 2>&1; then
     echo "Usage:"
     echo "  sudo mantis              # Run HIDS Sensor"
     echo "  sudo mantis --help       # Show options"
-    echo "  sudo mantis-server       # Run Log Server (for Distributed Mode)"
+    echo "  mantis-siem              # Run Enterprise Web Dashboard"
     echo ""
 else
     echo ""

@@ -5,14 +5,17 @@ import sys
 import time
 import collections
 
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 # Import All Engines
-import z_score      # Phase 2: Statistical (DDoS)
-import knn          # Phase 3: Behavioral (Port Scan)
-import naive_bayes  # Phase 4: Payload (SQLi/XSS)
-import bloom        # Phase 5: Reputation (Blacklist)
-import kmeans       # Phase 6: Unsupervised Learning (Clustering)
-import reporting    # Phase 7: Forensics (HTML Report)
-import active_defense # Phase 8: Active Defense (Blocking)
+import engines.z_score as z_score            # Phase 2: Statistical (DDoS)
+import engines.knn as knn                    # Phase 3: Behavioral (Port Scan)
+import engines.naive_bayes as naive_bayes    # Phase 4: Payload (SQLi/XSS)
+import engines.bloom as bloom                # Phase 5: Reputation (Blacklist)
+import engines.kmeans as kmeans              # Phase 6: Unsupervised Learning (Clustering)
+import dashboard_ui.reporting as reporting   # Phase 7: Forensics (HTML Report)
+import utils.active_defense as active_defense # Phase 8: Active Defense (Blocking)
 
 # MANTIS: COMPLETE SENSOR AGENT (5 Algorithms + Forensics + IPS)
 # Integrates all detection modules into a single real-time sensor.
@@ -147,11 +150,17 @@ def start_sensor(stats_queue=None, alert_queue=None):
                 elif protocol == 17: # UDP
                     udp_header = raw_data[t_offset:t_offset+8]
                     udph = struct.unpack('!HHHH', udp_header)
+                    src_port = udph[0]
                     dest_port = udph[1]
+                    
+                    # Ignore MANTIS's own SIEM Telemetry (Port 9999) to prevent infinite loops
+                    if src_port == 9999 or dest_port == 9999:
+                        continue
+                        
                     unique_ports.add(dest_port)
                     
                     if not stats_queue: 
-                        print(f"[UDP] {s_addr}:{udph[0]} -> {d_addr}:{dest_port}")
+                        print(f"[UDP] {s_addr}:{src_port} -> {d_addr}:{dest_port}")
 
                     payload = raw_data[t_offset + 8:]
                 
