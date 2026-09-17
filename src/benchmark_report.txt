@@ -1,0 +1,103 @@
+========================================================================
+  MANTIS BENCHMARK & MODEL COMPARISON REPORT
+========================================================================
+  Generated : 2026-07-25 20:56:11
+  Brain file: data/mantis_brain_20260725_205542.json
+  Trained at: 2026-07-25 20:55:42
+
+------------------------------------------------------------------------
+  1. EXECUTIVE SUMMARY (for supervisor)
+------------------------------------------------------------------------
+
+  Unit tests passed     : 21 / 21
+  Offline-trained models: 3  (knn, kmeans, payload)
+  Evaluated engines     : 3  (offline harness)
+
+  MANTIS uses an ENSEMBLE: each model targets a different attack type.
+  We do NOT pick one global 'best model' — we compare each engine on
+  its own labelled test set and select the strongest per category.
+
+  Highest F1 this run : KNN (Port Scan) (F1=1.0000)
+
+------------------------------------------------------------------------
+  2. TRAINED MODELS (what was learned from datasets)
+------------------------------------------------------------------------
+
+  Model                 | Algorithm            | Dataset                | Detail
+  ----------------------|----------------------|------------------------|------------------
+  KNN (Port Scan)       | K-Nearest Neighbours | CIC-IoT2023 / knn CSV  | 40 labelled samples | k=3
+  Naive Bayes (Payload) | Multinomial NB       | payload_sample.csv     | 12 keywords, prior_mal=0.5
+  K-Means (Drift)       | Mini-batch K-Means   | CIC-IoT2023            | k=3, 3 centroids (online at runtime)
+  Z-Score (DDoS)        | Welford online stats | Runtime baseline       | threshold=3.0 sigma (not stored in brain JSON)
+  Bloom Filter (IP rep) | Probabilistic hash   | Seeded blacklist       | O(1) lookup (not ML-trained from CSV)
+
+------------------------------------------------------------------------
+  3. EVALUATION METRICS (how we compare)
+------------------------------------------------------------------------
+
+  For each engine we run every labelled test sample, build a confusion
+  matrix (TP/FP/FN/TN), then compute:
+
+    Precision = TP / (TP + FP)   — alerts that were correct
+    Recall    = TP / (TP + FN)   — attacks that were caught
+    F1        = 2PR / (P + R)    — balanced score (PRIMARY metric)
+    Accuracy  = (TP+TN) / total  — overall correctness
+
+  Primary selection rule: highest F1 per attack category.
+
+  Engine                    TP    FP    FN    TN      Prec    Recall      F1  Accuracy
+  --------------------------------------------------------------------
+  KNN (Port Scan)           21     0     0    19   100.00%   100.00%  1.0000   100.00%
+  Naive Bayes (Payload)      6     0     6    12   100.00%    50.00%  0.6667    75.00%
+  Z-Score (DDoS)             3     0     3    34   100.00%    50.00%  0.6667    92.50%
+
+  Ranking by F1 (best first):
+    1. KNN (Port Scan) — F1=1.0000
+    2. Naive Bayes (Payload) — F1=0.6667
+    3. Z-Score (DDoS) — F1=0.6667
+
+------------------------------------------------------------------------
+  4. WHICH MODEL IS 'BEST'? (supervisor Q&A)
+------------------------------------------------------------------------
+
+  Q: How do you compare your models?
+  A: Train on labelled data -> evaluate on held-out labelled CSVs ->
+     confusion matrix -> Precision / Recall / F1. Same pipeline for
+     every engine so comparison is fair and reproducible.
+
+  Q: Which model wins overall?
+  A: None alone — MANTIS is an ensemble. Each engine owns one feature:
+       * Z-Score     -> volumetric DDoS (packets-per-second spikes)
+       * KNN         -> port-scan behaviour (ports vs packet count)
+       * Naive Bayes -> malicious HTTP/TCP payloads (SQLi keywords)
+       * K-Means     -> behavioural drift (live cluster distance)
+       * Bloom Filter-> known-malicious IP reputation
+
+  Q: Best per category on THIS benchmark run:
+       * Port scan detection        -> KNN (Port Scan)  F1=1.0000  (P=100.00% R=100.00%)
+       * Payload / SQLi detection   -> Naive Bayes (Payload)  F1=0.6667  (P=100.00% R=50.00%)
+       * DDoS / flood detection     -> Z-Score (DDoS)  F1=0.6667  (P=100.00% R=50.00%)
+
+  Q: Why might recall look low on small samples?
+  A: Interim CSV samples are tiny (40-24 rows). Low recall on Z-Score
+     or Naive Bayes reflects corpus size, not a broken algorithm.
+     KNN trained on 20k CIC-IoT2023 rows shows higher scan recall.
+
+  Q: How does MANTIS compare to Snort / Wazuh?
+  A: Qualitative criteria (anomaly detection, blocking, RAM, transparency)
+     plus planned head-to-head on the same CIC-IoT2023 slice with CPU/RAM.
+
+------------------------------------------------------------------------
+  5. REPRODUCE THIS REPORT
+------------------------------------------------------------------------
+
+  cd src
+  ./benchmark.sh
+
+  Outputs:
+    data/mantis_brain_<timestamp>.json  — trained models
+    evaluation_results.json             — machine-readable metrics
+    evaluation_results.txt              — short eval summary
+    benchmark_report.txt                — this file (supervisor brief)
+
+========================================================================

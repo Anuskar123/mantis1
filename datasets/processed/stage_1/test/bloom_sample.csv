@@ -1,0 +1,6 @@
+ip,label
+9.9.9.9,Normal
+208.67.222.222,Normal
+192.0.2.66,Malicious
+203.0.113.5,Malicious
+192.168.1.50,Normal

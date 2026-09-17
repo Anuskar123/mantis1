@@ -1,0 +1,137 @@
+<mxfile host="app.diagrams.net" agent="Codex">
+  <diagram id="Detailed_UC" name="Detailed Use Case">
+    <mxGraphModel dx="1716" dy="1167" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="System" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=15;verticalAlign=top;align=center;spacingTop=12;" value="MANTIS Host-Based Intrusion Detection System" vertex="1">
+          <mxGeometry height="1050" width="1140" x="230" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Admin" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=13;" value="Security&lt;br&gt;Administrator" vertex="1">
+          <mxGeometry height="100" width="75" x="65" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="Host" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=13;" value="Host Operating&lt;br&gt;System&lt;br&gt;&amp;lt;&amp;lt;external&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="100" width="95" x="1450" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="SIEM" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=13;" value="External SIEM&lt;br&gt;&amp;lt;&amp;lt;external&amp;gt;&amp;gt;" vertex="1">
+          <mxGeometry height="100" width="95" x="1450" y="485" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_Operate" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="Operate MANTIS&lt;br&gt;Monitoring" vertex="1">
+          <mxGeometry height="80" width="240" x="320" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_Detect" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="Detect Network&lt;br&gt;Threats" vertex="1">
+          <mxGeometry height="80" width="240" x="680" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_Analyse" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="Capture and Analyse&lt;br&gt;Network Traffic" vertex="1">
+          <mxGeometry height="80" width="240" x="1040" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_Config" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="Configure Detection and&lt;br&gt;Response Settings" vertex="1">
+          <mxGeometry height="80" width="240" x="320" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_Respond" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="Respond to Detected&lt;br&gt;Threats" vertex="1">
+          <mxGeometry height="80" width="240" x="680" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_Alert" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="Generate Security&lt;br&gt;Alert" vertex="1">
+          <mxGeometry height="80" width="240" x="1040" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_Investigate" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="Monitor and Investigate&lt;br&gt;Security Activity" vertex="1">
+          <mxGeometry height="80" width="240" x="320" y="465" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_Block" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="Block Malicious&lt;br&gt;Source" vertex="1">
+          <mxGeometry height="80" width="240" x="680" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_Forward" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="Forward Alert to&lt;br&gt;External SIEM" vertex="1">
+          <mxGeometry height="80" width="240" x="1040" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_View" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="View Dashboard and&lt;br&gt;Alerts" vertex="1">
+          <mxGeometry height="80" width="240" x="320" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_Inspect" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="Inspect Packet and&lt;br&gt;Incident Evidence" vertex="1">
+          <mxGeometry height="80" width="240" x="680" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_Report" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="Generate Forensic&lt;br&gt;Report" vertex="1">
+          <mxGeometry height="80" width="240" x="320" y="860" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_Models" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="Manage Detection&lt;br&gt;Models" vertex="1">
+          <mxGeometry height="80" width="240" x="680" y="860" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_Train" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="Train and Evaluate&lt;br&gt;Models" vertex="1">
+          <mxGeometry height="80" width="240" x="1040" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="UC_State" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" value="Save and Load&lt;br&gt;Learned State" vertex="1">
+          <mxGeometry height="80" width="240" x="1040" y="970" as="geometry" />
+        </mxCell>
+        <mxCell id="A1" edge="1" parent="1" source="Admin" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;endArrow=none;startArrow=none;strokeColor=#000000;" target="UC_Operate" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="190" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="A2" edge="1" parent="1" source="Admin" style="html=1;rounded=0;endArrow=none;startArrow=none;strokeColor=#000000;" target="UC_Investigate" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="A3" edge="1" parent="1" source="Admin" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;endArrow=none;startArrow=none;strokeColor=#000000;" target="UC_Report" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="900" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="A4" edge="1" parent="1" source="Admin" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;endArrow=none;startArrow=none;strokeColor=#000000;" target="UC_Models" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="1060" />
+              <mxPoint x="800" y="1060" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="H1" edge="1" parent="1" source="Host" style="html=1;rounded=0;endArrow=none;startArrow=none;strokeColor=#000000;" target="UC_Analyse" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S1" edge="1" parent="1" source="SIEM" style="html=1;rounded=0;endArrow=none;startArrow=none;strokeColor=#000000;" target="UC_Forward" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="I1" edge="1" parent="1" source="UC_Operate" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=11;labelBackgroundColor=#ffffff;" target="UC_Config" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="I2" edge="1" parent="1" source="UC_Operate" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=11;labelBackgroundColor=#ffffff;" target="UC_Detect" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="I3" edge="1" parent="1" source="UC_Detect" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=11;labelBackgroundColor=#ffffff;" target="UC_Analyse" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E1" edge="1" parent="1" source="UC_Respond" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=11;labelBackgroundColor=#ffffff;" target="UC_Detect" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;&lt;br&gt;[threat detected]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="I4" edge="1" parent="1" source="UC_Respond" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=11;labelBackgroundColor=#ffffff;" target="UC_Alert" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E2" edge="1" parent="1" source="UC_Block" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=11;labelBackgroundColor=#ffffff;" target="UC_Respond" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;&lt;br&gt;[active defence enabled]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E3" edge="1" parent="1" source="UC_Forward" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=11;labelBackgroundColor=#ffffff;" target="UC_Alert" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;&lt;br&gt;[SIEM forwarding enabled]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="I5" edge="1" parent="1" source="UC_Investigate" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=11;labelBackgroundColor=#ffffff;" target="UC_View" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E4" edge="1" parent="1" source="UC_Inspect" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=11;labelBackgroundColor=#ffffff;" target="UC_Investigate" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;&lt;br&gt;[incident selected]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E5" edge="1" parent="1" source="UC_Report" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=11;labelBackgroundColor=#ffffff;" target="UC_Investigate" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;&lt;br&gt;[report requested]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="I6" edge="1" parent="1" source="UC_Models" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=11;labelBackgroundColor=#ffffff;" target="UC_Train" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="I7" edge="1" parent="1" source="UC_Models" style="edgeStyle=orthogonalEdgeStyle;html=1;rounded=0;dashed=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;fontSize=11;labelBackgroundColor=#ffffff;" target="UC_State" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Legend" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontStyle=2;fontColor=#000000;strokeColor=none;fillColor=none;" value="Solid line = actor association | &amp;lt;&amp;lt;include&amp;gt;&amp;gt; = mandatory | &amp;lt;&amp;lt;extend&amp;gt;&amp;gt; = conditional (arrow points to base use case)&lt;br&gt;Relationships show dependency, not processing order or an end state." vertex="1">
+          <mxGeometry height="45" width="1050" x="275" y="1140" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

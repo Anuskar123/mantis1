@@ -1,0 +1,214 @@
+{
+  "layout_version": 1,
+  "stage": "stage_1",
+  "purpose": "controlled engine-compatible training and evaluation",
+  "seed": "mantis-stage-v1",
+  "split_policy": "deterministic stratified 70/15/15 with small-class safeguards",
+  "datasets": {
+    "knn_sample.csv": {
+      "source_file": "datasets/knn_sample.csv",
+      "source_sha256": "f28fed2e85f7b750396ca5b22f1ec0ce2c088325a1eff494a0cfa44e37879e4a",
+      "source_rows": 40,
+      "unique_rows": 40,
+      "duplicates_removed": 0,
+      "splits": {
+        "train": {
+          "file": "datasets/processed/stage_1/train/knn_sample.csv",
+          "rows": 27,
+          "class_distribution": {
+            "Scan": 14,
+            "Normal": 13
+          },
+          "sha256": "5262c70d6082a3afe1946a4b6e0796131a5aba7a1ca0f5e8a0e960d990d3d38c"
+        },
+        "validation": {
+          "file": "datasets/processed/stage_1/validation/knn_sample.csv",
+          "rows": 6,
+          "class_distribution": {
+            "Normal": 3,
+            "Scan": 3
+          },
+          "sha256": "9eb89c2d882dbed2e5136a21f5ebfdfcf073cbab35308ec549f6546408209838"
+        },
+        "test": {
+          "file": "datasets/processed/stage_1/test/knn_sample.csv",
+          "rows": 7,
+          "class_distribution": {
+            "Normal": 3,
+            "Scan": 4
+          },
+          "sha256": "a0695c03d0ec9009e076cbf64faa1afce06d6048887488233176a8db19c27d36"
+        }
+      },
+      "overlap_rows": {
+        "train_validation": 0,
+        "train_test": 0,
+        "validation_test": 0
+      }
+    },
+    "payload_sample.csv": {
+      "source_file": "datasets/payload_sample.csv",
+      "source_sha256": "e23c8c987c691dd9391caaf6b275602876606ba5ae988637cb1a91143d07e12e",
+      "source_rows": 24,
+      "unique_rows": 24,
+      "duplicates_removed": 0,
+      "splits": {
+        "train": {
+          "file": "datasets/processed/stage_1/train/payload_sample.csv",
+          "rows": 16,
+          "class_distribution": {
+            "Normal": 8,
+            "Malicious": 8
+          },
+          "sha256": "5d6be54e59c89f1c037a1cebff7df0a6563d762bda2111100fb2fd35f6f44efe"
+        },
+        "validation": {
+          "file": "datasets/processed/stage_1/validation/payload_sample.csv",
+          "rows": 4,
+          "class_distribution": {
+            "Malicious": 2,
+            "Normal": 2
+          },
+          "sha256": "1cb29808e09e5ddbe091157bd1d130447d9170ed74e352bd4f5bb6fd43756de3"
+        },
+        "test": {
+          "file": "datasets/processed/stage_1/test/payload_sample.csv",
+          "rows": 4,
+          "class_distribution": {
+            "Malicious": 2,
+            "Normal": 2
+          },
+          "sha256": "163adbab0b7bb2af13d9ca5da3e6f1f73a46b5706d80caa6319d8170f4544720"
+        }
+      },
+      "overlap_rows": {
+        "train_validation": 0,
+        "train_test": 0,
+        "validation_test": 0
+      }
+    },
+    "kmeans_sample.csv": {
+      "source_file": "datasets/kmeans_sample.csv",
+      "source_sha256": "34ab9deaf104170c805e2123898bb4f013bd6b7d8347a8953957ed66db879ef7",
+      "source_rows": 44,
+      "unique_rows": 19,
+      "duplicates_removed": 25,
+      "splits": {
+        "train": {
+          "file": "datasets/processed/stage_1/train/kmeans_sample.csv",
+          "rows": 12,
+          "class_distribution": {
+            "Anomaly": 5,
+            "Normal": 7
+          },
+          "sha256": "304e6f93b3eac2cbf2898d8429f0099bdf1794a9ac9a22e89cbe70d03d2993e0"
+        },
+        "validation": {
+          "file": "datasets/processed/stage_1/validation/kmeans_sample.csv",
+          "rows": 3,
+          "class_distribution": {
+            "Normal": 2,
+            "Anomaly": 1
+          },
+          "sha256": "9a33f8098cf621cbac09c2c4da75c41e23901bf4e999f99f78020e3df822c230"
+        },
+        "test": {
+          "file": "datasets/processed/stage_1/test/kmeans_sample.csv",
+          "rows": 4,
+          "class_distribution": {
+            "Normal": 2,
+            "Anomaly": 2
+          },
+          "sha256": "be29463879e143e46bba83b451a98eca3a28d2d1de2d66981601a4384ddb7b47"
+        }
+      },
+      "overlap_rows": {
+        "train_validation": 0,
+        "train_test": 0,
+        "validation_test": 0
+      }
+    },
+    "zscore_sample.csv": {
+      "source_file": "datasets/zscore_sample.csv",
+      "source_sha256": "425628106add1192ec3887524f768afec0a5823e3b8ac56999b8daf2d72debda",
+      "source_rows": 40,
+      "unique_rows": 12,
+      "duplicates_removed": 28,
+      "splits": {
+        "train": {
+          "file": "datasets/processed/stage_1/train/zscore_sample.csv",
+          "rows": 8,
+          "class_distribution": {
+            "DDoS": 4,
+            "Normal": 4
+          },
+          "sha256": "685ce0e81f5e6b7aca6547a9a0f44647cac35fefa2004bd5577209f3db4af88b"
+        },
+        "validation": {
+          "file": "datasets/processed/stage_1/validation/zscore_sample.csv",
+          "rows": 2,
+          "class_distribution": {
+            "Normal": 1,
+            "DDoS": 1
+          },
+          "sha256": "7c92fc9579b98a2720939cfdeaf0b991907c766eb49d1910f35b57dc061aa372"
+        },
+        "test": {
+          "file": "datasets/processed/stage_1/test/zscore_sample.csv",
+          "rows": 2,
+          "class_distribution": {
+            "Normal": 1,
+            "DDoS": 1
+          },
+          "sha256": "e97237585fefc3a8bbb56b6256c2cee53e83ee93da3a2e3638d743539dffa598"
+        }
+      },
+      "overlap_rows": {
+        "train_validation": 0,
+        "train_test": 0,
+        "validation_test": 0
+      }
+    },
+    "bloom_sample.csv": {
+      "source_file": "datasets/bloom_sample.csv",
+      "source_sha256": "70c7da1f7f24166e7f9fac3e5ba6069ca283fb29e6ef8518acd6636849a472ed",
+      "source_rows": 30,
+      "unique_rows": 30,
+      "duplicates_removed": 0,
+      "splits": {
+        "train": {
+          "file": "datasets/processed/stage_1/train/bloom_sample.csv",
+          "rows": 21,
+          "class_distribution": {
+            "Malicious": 7,
+            "Normal": 14
+          },
+          "sha256": "771db92340006845f8df2ac48274aa1b17a2e359267289115f9e933be337f8c7"
+        },
+        "validation": {
+          "file": "datasets/processed/stage_1/validation/bloom_sample.csv",
+          "rows": 4,
+          "class_distribution": {
+            "Normal": 3,
+            "Malicious": 1
+          },
+          "sha256": "3f52a470771d9f6cc56b75f2afed39f8c2db0d25165ad9bc13b6dcdce78edb3a"
+        },
+        "test": {
+          "file": "datasets/processed/stage_1/test/bloom_sample.csv",
+          "rows": 5,
+          "class_distribution": {
+            "Normal": 3,
+            "Malicious": 2
+          },
+          "sha256": "b0adb988fbe326af0ef138a8086001e014b7737651bd9d97dbeb8bfaa3ec097e"
+        }
+      },
+      "overlap_rows": {
+        "train_validation": 0,
+        "train_test": 0,
+        "validation_test": 0
+      }
+    }
+  }
+}

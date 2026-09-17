@@ -1,103 +1,100 @@
-# MANTIS (Minimalist Alert Network for Threat Intelligence System)
+# MANTIS
 
-A Host-Based Intrusion Detection System (HIDS) built from First Principles.
-Designed for minimal resource usage, zero external dependencies, and maximum auditability.
+**Minimalist Alert Network for Threat Intelligence System**
 
-**Features:**
-- **Zero-Dependency**: Uses only Python 3 Standard Library.
-- **Auditable**: <250 lines of core logic.
-- [x] **5-Engine Advanced Detection**:
-    1.  **Statistical**: Z-Score (DDoS Detection).
-    2.  **Behavioral**: KNN (Port Scan / Scan Ratios).
-    3.  **Unsupervised**: K-Means Clustering (Anomaly Grouping).
-    4.  **Probabilistic**: Naive Bayes (Payload / SQLi).
-    5.  **Reputation**: Bloom Filter (IP Blacklisting).
-- [x] **Forensic Reporting**: Generates HTML Incident Reports (`mantis_report.html`) automatically on exit.
-- [x] **Distributed Architecture**: Supports sending alerts to a remote dashboard via UDP.
+MANTIS is an academic network intrusion detection prototype with five detection engines, a browser dashboard, offline PCAP replay, dataset training, and incident reporting. The core detection and dashboard code uses the Python standard library.
 
-## Requirements
-- **Operating System**: Linux (Ubuntu, Kali, Fedora, Debian, CentOS, Arch, Raspbian).
-  - *Note: Windows/macOS are NOT supported due to `AF_PACKET` usage.*
-- **Language**: Python 3.6+
-- **Privileges**: Root/Sudo (Required for Raw Sockets).
+## Detection engines
 
-## Installation
-Clone this repository or copy the `mantis/` folder to your Linux machine.
+| Engine | Purpose |
+| --- | --- |
+| Z-Score | Detect unusual packet-rate increases against a rolling baseline |
+| K-Nearest Neighbours | Classify scan behaviour from unique ports and packet counts |
+| K-Means | Identify unusual traffic patterns using online clustering |
+| Naive Bayes | Classify visible payload tokens |
+| Bloom Filter | Check source addresses against a threat intelligence feed |
 
-### Automated Install (Recommended)
-```bash
-cd src
-sudo ./install.sh
-```
+The project also provides JSON model-state persistence, CSV audit logs, HTML reports, PCAP export, UDP sensor telemetry, and optional Linux firewall response. Blocking is disabled by default.
 
-### Manual Install
-No `pip install` required! Just run the python files directly.
+## Quick start
 
-## Troubleshooting
-Having connectivity issues? Check our [Troubleshooting Guide](TROUBLESHOOTING.md).
-
-## Usage
-For detailed instructions, see our **[How to Run Guide](HOW_TO_RUN.md)**.
-
-### 1. Local Mode (Standalone)
-Run MANTIS on a single machine. Alerts appear in the console and are logged to `mantis_logs.csv`.
+Live packet capture requires Linux with AF_PACKET and root privileges or the capabilities configured by the installer. Offline training, evaluation, replay, and tests can run on Windows. Python 3.14.6 was used for the publication checks.
 
 ```bash
-cd src
-sudo python3 main.py
+git clone https://github.com/Anuskar123/mantis1.git
+cd mantis1/src
+sudo python3 main.py --mode web
 ```
 
-### 2. Enterprise SIEM Mode (Web Dashboard)
-Run the central dashboard on one machine (e.g., Ubuntu). Note: You can also just select the "Web Dashboard" option when running `main.py`.
+Open `http://localhost:8080` on the host. For the terminal interface, use `sudo python3 main.py --mode cli`.
+
+To install the command-line entry points on Linux:
 
 ```bash
-cd src
-python3 dashboard_ui/siem.py
+cd mantis1/src
+sudo bash install.sh
+mantis --help
 ```
-*   **Web Interface**: Open `http://localhost:8080` in your browser.
-*   **UDP Listener**: Listening on Port 9999.
 
-**Connect Sensors:**
-On your other machines (sensors), run:
+Run each example from the stated directory. If already inside `mantis1/src`, skip its `cd` line. On Windows, use `python` instead of `python3` for offline commands.
+
+## Offline demonstration
+
+From `mantis1/src`:
+
 ```bash
-cd src
-sudo python3 main.py --remote <SIEM_IP> --port 9999
+python3 replay.py --generate demo.pcap
+python3 replay.py --pcap demo.pcap --out-json demo-results.json
 ```
 
-### 3. Help
+This generates synthetic test traffic locally and replays it through the detection pipeline. It does not require live capture.
+
+## Train and evaluate
+
+Small labelled datasets and deterministic train, validation, and test splits are included. See the [dataset guide](datasets/README.md) for the five-engine training commands, saved-model selection, evaluation, and dataset provenance.
+
 ```bash
-cd src
-sudo python3 main.py --help
+cd mantis1/src
+python3 -m training.train --knn-csv ../datasets/processed/stage_1/train/knn_sample.csv --payload-csv ../datasets/processed/stage_1/train/payload_sample.csv --kmeans-csv ../datasets/processed/stage_1/train/kmeans_sample.csv --zscore-csv ../datasets/processed/stage_1/train/zscore_sample.csv --bloom-csv ../datasets/processed/stage_1/train/bloom_sample.csv --out data/mantis_brain_stage_1.json
 ```
 
-## Quick Start (GitHub Users)
-If you clone this repo:
+The trainer prints the timestamped model path it saves. Generated model states and live capture logs are excluded from version control.
+
+The 20,000-row and 300,000-row CIC flow exports are included for the supported flow-rate comparison. They lack genuine `unique_ports` aggregates and are not valid direct KNN or K-Means training inputs. The raw archive and its multipart files are not included in Git because of their size. [Raw dataset metadata](datasets/raw/README.md) explains the available checksums and reconstruction scripts.
+
+## Tests
+
 ```bash
-git clone https://github.com/YOUR_USERNAME/MANTIS.git
-cd MANTIS/src
-sudo chmod +x main.py
-sudo ./main.py
+cd mantis1/src
+python3 -m unittest discover -s tests -v
 ```
 
-### Using Over the Internet (World Wide Web)
-If you want to send logs to a Dashboard on a **Different Network** (e.g., Friend in another country):
-1.  **On Dashboard Machine**: Find your Public IP (`curl ifconfig.me`).
-2.  **On Router**: Forward **UDP Port 9999** to your Dashboard Machine's local IP.
-3.  **On Friend's Machine**: Run:
-    ```bash
-    sudo mantis --remote YOUR_PUBLIC_IP
-    ```
+The current suite has 119 tests covering engines, dataset splits, parsing, privacy, replay, alert dispatch, SIEM APIs, training, and model persistence. All passed locally on Windows with Python 3.14.6 before publication. GitHub Actions runs the suite on Linux and Windows with Python 3.11 and 3.14.
 
-## Logs & Evidence
-All alerts are automatically saved to `mantis_logs.csv` in the current directory for post-incident analysis.
+These tests and synthetic replays verify controlled behaviour. They do not establish production detection accuracy or performance across the full external dataset. Existing evaluation output files and report figures are historical evidence, not newly rerun benchmark results.
 
-## Limitations & Future Work
-**Important for Defense/Viva:**
-1.  **HTTPS Visibility:** MANTIS operates at the Network Layer (Layer 3/4). It cannot decrypt HTTPS traffic (Layer 7). Therefore, the **Payload Engine** (Naive Bayes) only works on unencrypted HTTP or if SSL Termination is done upstream.
-    *   *Future Work:* Integrate with a transparent proxy (MitM) or read web server logs directly.
-2.  **Performance:** As a Python-based user-space tool, MANTIS is slower than kernel-space tools like eBPF or C-based engines (Snort).
-    *   *Future Work:* Rewrite the core packet capture loop in C or Rust.
-3.  **Spoofing:** MANTIS relies on IP headers, which can be spoofed (UDP).
+## Repository guide
+
+| Location | Contents |
+| --- | --- |
+| [src](src/) | Sensor, detection engines, dashboard, training, evaluation, replay, and tests |
+| [datasets](datasets/) | Sample data, processed CIC exports, deterministic splits, and manifests |
+| [docs/figures](docs/figures/) | Diagram sources and exported figures |
+| [Project deliverables](docs/deliverables/README.md) | Dissertation versions, presentations, proposal, interim reports, Gantt charts, and viva/demo documents |
+| [scripts](scripts/) | Dataset preparation and raw archive packaging utilities |
+| [How to run](HOW_TO_RUN.md) | Detailed operation instructions |
+| [Installation](INSTALL.md) | Installation guide |
+| [Testing guide](TEST_GUIDE.md) | Automated checks and lab demonstrations |
+| [Troubleshooting](TROUBLESHOOTING.md) | Common setup issues |
+
+## Scope and limitations
+
+This is a final-year research prototype for controlled lab use. The dashboard has no built-in authentication and UDP telemetry is unencrypted. Keep dashboard and sensor ports within an isolated lab or authenticated VPN. Only capture or test traffic on systems you own or are authorised to use.
+
+Encrypted HTTPS payloads are not decrypted. Source IP attribution depends on observed packets and can be affected by spoofing. Python capture performance and model quality depend on the workload and the data used. Portability of saved JSON state does not constitute federated learning.
+
+Reports and presentations are preserved as supplied and may describe different development stages. Consult the executable source and current test results for present behaviour. Working backups, university handouts, temporary renders, packet captures, live logs, and virtual environments are excluded from this publishing copy.
 
 ## License
-MIT License. Free to use and modify.
+
+The project source code is provided under the [MIT License](LICENSE). External datasets retain their original terms and attribution.

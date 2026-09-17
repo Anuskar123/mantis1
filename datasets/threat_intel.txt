@@ -1,0 +1,30 @@
+# MANTIS threat intelligence feed (sample)
+#
+# One indicator per line. Blank lines and '#' comments are ignored, and a
+# trailing ",comment" or "# note" on an indicator line is stripped, so this
+# format is compatible with the plain-text IP blocklists published by feeds
+# such as abuse.ch, Spamhaus DROP and FireHOL.
+#
+# Load it with:
+#   sudo python3 main.py --blacklist-file ../datasets/threat_intel.txt
+#
+# IMPORTANT: every address below is drawn from a range reserved by RFC 5737
+# (documentation), RFC 1918 (private) or RFC 3927 (link-local). None of them
+# routes on the public internet, so this file cannot cause traffic to a real
+# third party to be dropped. Replace with a live feed only in your own lab.
+
+# --- RFC 5737 documentation ranges: safe stand-ins for "known-bad" hosts ---
+192.0.2.1          # TEST-NET-1, simulated C2 server
+192.0.2.66         # TEST-NET-1, simulated scanner
+198.51.100.23      # TEST-NET-2, simulated botnet node
+198.51.100.77      # TEST-NET-2, simulated exfiltration endpoint
+203.0.113.5        # TEST-NET-3, simulated malware distribution host
+203.0.113.99       # TEST-NET-3, simulated brute-force source
+
+# --- private-range hosts used by the lab test scenarios ---
+10.0.0.66,replay scenario blacklist target
+192.168.1.200,interim report seed indicator
+172.16.0.13        # simulated compromised internal host
+
+# --- link-local, sometimes abused for lateral movement ---
+169.254.13.37

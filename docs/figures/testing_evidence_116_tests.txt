@@ -1,0 +1,213 @@
+test_added_item_found (test_engines.TestBloom.test_added_item_found) ... ok
+test_unknown_item_not_found (test_engines.TestBloom.test_unknown_item_not_found) ... ok
+test_centroid_moves_after_observation (test_engines.TestKMeans.test_centroid_moves_after_observation) ... ok
+test_returns_valid_cluster (test_engines.TestKMeans.test_returns_valid_cluster) ... ok
+test_aggressive_scan (test_engines.TestKNN.test_aggressive_scan) ... ok
+test_export_import_round_trip (test_engines.TestKNN.test_export_import_round_trip) ... ok
+test_normal_browsing (test_engines.TestKNN.test_normal_browsing) ... ok
+test_admin_alone_is_never_malicious (test_engines.TestNaiveBayes.test_admin_alone_is_never_malicious) ... ok
+test_export_import_round_trip (test_engines.TestNaiveBayes.test_export_import_round_trip) ... ok
+test_normal_http_is_safe (test_engines.TestNaiveBayes.test_normal_http_is_safe) ... ok
+test_sqli_is_malicious (test_engines.TestNaiveBayes.test_sqli_is_malicious) ... ok
+test_constant_traffic_has_zero_stddev (test_engines.TestZScore.test_constant_traffic_has_zero_stddev) ... ok
+test_spike_triggers_high_z (test_engines.TestZScore.test_spike_triggers_high_z) ... ok
+test_all_five_engines_round_trip (test_integration.TestBrainRoundTripAcrossEngines.test_all_five_engines_round_trip) ... ok
+test_alert_written_with_all_fr4_columns (test_integration.TestDispatcherFanOut.test_alert_written_with_all_fr4_columns) ... ok
+test_blocking_disabled_by_default (test_integration.TestDispatcherFanOut.test_blocking_disabled_by_default) ... ok
+test_blocking_when_enabled (test_integration.TestDispatcherFanOut.test_blocking_when_enabled) ... ok
+test_duplicate_alert_is_published_once (test_integration.TestDispatcherFanOut.test_duplicate_alert_is_published_once) ... ok
+test_duplicate_block_inserted_once (test_integration.TestDispatcherFanOut.test_duplicate_block_inserted_once) ... ok
+test_every_engine_kind_can_trigger_a_block (test_integration.TestDispatcherFanOut.test_every_engine_kind_can_trigger_a_block) ... ok
+test_pii_is_redacted_before_persistence (test_integration.TestDispatcherFanOut.test_pii_is_redacted_before_persistence) ... ok
+test_response_status_says_blocked_only_after_success (test_integration.TestDispatcherFanOut.test_response_status_says_blocked_only_after_success) ... ok
+test_response_status_says_flagged_when_blocking_is_disabled (test_integration.TestDispatcherFanOut.test_response_status_says_flagged_when_blocking_is_disabled) ... ok
+test_whitelisted_ip_is_never_blocked (test_integration.TestDispatcherFanOut.test_whitelisted_ip_is_never_blocked) ... ok
+test_distributed_traffic_is_not_attributed_or_blockable (test_integration.TestIntervalSourceAttribution.test_distributed_traffic_is_not_attributed_or_blockable) ... ok
+test_dominant_source_is_attributed_above_threshold (test_integration.TestIntervalSourceAttribution.test_dominant_source_is_attributed_above_threshold) ... ok
+test_buffer_exports_as_readable_pcap (test_integration.TestPacketStoreToPcap.test_buffer_exports_as_readable_pcap) ... ok
+test_ring_buffer_is_bounded (test_integration.TestPacketStoreToPcap.test_ring_buffer_is_bounded) ... ok
+test_benign_frame_is_not_flagged (test_integration.TestParserToEngines.test_benign_frame_is_not_flagged) ... ok
+test_icmp_frame_is_decoded (test_integration.TestParserToEngines.test_icmp_frame_is_decoded) ... ok
+test_sqli_frame_decodes_and_is_flagged (test_integration.TestParserToEngines.test_sqli_frame_decodes_and_is_flagged) ... ok
+test_truncated_frame_does_not_raise (test_integration.TestParserToEngines.test_truncated_frame_does_not_raise) ... ok
+test_vlan_tagged_frame_is_decoded (test_integration.TestParserToEngines.test_vlan_tagged_frame_is_decoded) ... ok
+test_alerts_carry_attack_technique_and_risk (test_integration.TestReplayPipeline.test_alerts_carry_attack_technique_and_risk) ... ok
+test_all_frames_decode_without_error (test_integration.TestReplayPipeline.test_all_frames_decode_without_error) ... ok
+test_capture_is_valid_pcap (test_integration.TestReplayPipeline.test_capture_is_valid_pcap) ... ok
+test_controlled_interval_attacks_have_source_attribution (test_integration.TestReplayPipeline.test_controlled_interval_attacks_have_source_attribution) ... ok
+test_every_engine_detects_its_own_attack (test_integration.TestReplayPipeline.test_every_engine_detects_its_own_attack) ... ok
+test_normal_baseline_produces_no_alerts (test_integration.TestReplayPipeline.test_normal_baseline_produces_no_alerts) ... ok
+test_port_scan_detected_only_during_scan_window (test_integration.TestReplayPipeline.test_port_scan_detected_only_during_scan_window) ... ok
+test_false_positive_rate_grows_with_saturation (test_modules.TestBloomThreatIntel.test_false_positive_rate_grows_with_saturation) ... ok
+test_feed_loads_and_strips_comments (test_modules.TestBloomThreatIntel.test_feed_loads_and_strips_comments) ... ok
+test_missing_feed_reports_failure (test_modules.TestBloomThreatIntel.test_missing_feed_reports_failure) ... ok
+test_no_false_negatives (test_modules.TestBloomThreatIntel.test_no_false_negatives) ... ok
+test_unlisted_address_is_clean (test_modules.TestBloomThreatIntel.test_unlisted_address_is_clean) ... ok
+test_bad_env_value_does_not_crash (test_modules.TestConfig.test_bad_env_value_does_not_crash) ... ok
+test_blocking_is_off_by_default (test_modules.TestConfig.test_blocking_is_off_by_default) ... ok
+test_env_overrides_defaults_with_type_coercion (test_modules.TestConfig.test_env_overrides_defaults_with_type_coercion) ... ok
+test_json_file_round_trip (test_modules.TestConfig.test_json_file_round_trip) ... ok
+test_loopback_is_whitelisted_by_default (test_modules.TestConfig.test_loopback_is_whitelisted_by_default) ... ok
+test_privacy_defaults_match_nfr3 (test_modules.TestConfig.test_privacy_defaults_match_nfr3) ... ok
+test_anomalies_do_not_poison_the_model (test_modules.TestKMeansNovelty.test_anomalies_do_not_poison_the_model) ... ok
+test_confidence_grows_with_distance (test_modules.TestKMeansNovelty.test_confidence_grows_with_distance) ... ok
+test_familiar_traffic_is_not_flagged (test_modules.TestKMeansNovelty.test_familiar_traffic_is_not_flagged) ... ok
+test_no_alert_during_warm_up (test_modules.TestKMeansNovelty.test_no_alert_during_warm_up) ... ok
+test_novel_traffic_is_flagged (test_modules.TestKMeansNovelty.test_novel_traffic_is_flagged) ... ok
+test_features_are_normalised_to_unit_range (test_modules.TestKNNFeatureScaling.test_features_are_normalised_to_unit_range) ... ok
+test_flood_is_not_reported_as_a_port_scan (test_modules.TestKNNFeatureScaling.test_flood_is_not_reported_as_a_port_scan) ... ok
+test_low_port_ratio_is_not_a_scan (test_modules.TestKNNFeatureScaling.test_low_port_ratio_is_not_a_scan) ... ok
+test_low_volume_stealth_scan_is_detected (test_modules.TestKNNFeatureScaling.test_low_volume_stealth_scan_is_detected) ... ok
+test_normal_browsing_still_normal (test_modules.TestKNNFeatureScaling.test_normal_browsing_still_normal) ... ok
+test_ratio_feature_separates_the_classes (test_modules.TestKNNFeatureScaling.test_ratio_feature_separates_the_classes) ... ok
+test_scaling_recomputed_after_training (test_modules.TestKNNFeatureScaling.test_scaling_recomputed_after_training) ... ok
+test_scan_still_detected (test_modules.TestKNNFeatureScaling.test_scan_still_detected) ... ok
+test_zero_ports_can_never_be_a_scan (test_modules.TestKNNFeatureScaling.test_zero_ports_can_never_be_a_scan) ... ok
+test_confidence_scales_risk_without_saturating (test_modules.TestMitre.test_confidence_scales_risk_without_saturating) ... ok
+test_each_detection_maps_to_expected_technique (test_modules.TestMitre.test_each_detection_maps_to_expected_technique) ... ok
+test_payload_families_are_distinguished (test_modules.TestMitre.test_payload_families_are_distinguished) ... ok
+test_payload_families_group_for_policy (test_modules.TestMitre.test_payload_families_group_for_policy) ... ok
+test_risk_score_is_bounded (test_modules.TestMitre.test_risk_score_is_bounded) ... ok
+test_severe_low_confidence_outranks_mild_high_confidence (test_modules.TestMitre.test_severe_low_confidence_outranks_mild_high_confidence) ... ok
+test_unknown_message_is_not_fabricated (test_modules.TestMitre.test_unknown_message_is_not_fabricated) ... ok
+test_big_endian_capture_is_readable (test_modules.TestPcap.test_big_endian_capture_is_readable) ... ok
+test_global_header_is_libpcap_conformant (test_modules.TestPcap.test_global_header_is_libpcap_conformant) ... ok
+test_microsecond_precision_preserved (test_modules.TestPcap.test_microsecond_precision_preserved) ... ok
+test_rejects_non_pcap_file (test_modules.TestPcap.test_rejects_non_pcap_file) ... ok
+test_snaplen_truncates_but_records_original_length (test_modules.TestPcap.test_snaplen_truncates_but_records_original_length) ... ok
+test_write_then_read_round_trip (test_modules.TestPcap.test_write_then_read_round_trip) ... ok
+test_card_number_is_redacted (test_modules.TestPrivacy.test_card_number_is_redacted) ... ok
+test_control_bytes_cannot_reach_the_log (test_modules.TestPrivacy.test_control_bytes_cannot_reach_the_log) ... ok
+test_email_is_redacted (test_modules.TestPrivacy.test_email_is_redacted) ... ok
+test_excerpt_truncated_to_64_bytes (test_modules.TestPrivacy.test_excerpt_truncated_to_64_bytes) ... ok
+test_ip_anonymisation_masks_host_octet (test_modules.TestPrivacy.test_ip_anonymisation_masks_host_octet) ... ok
+test_non_ipv4_input_is_left_alone (test_modules.TestPrivacy.test_non_ipv4_input_is_left_alone) ... ok
+test_password_and_token_are_redacted (test_modules.TestPrivacy.test_password_and_token_are_redacted) ... ok
+test_privacy_mode_off_keeps_content (test_modules.TestPrivacy.test_privacy_mode_off_keeps_content) ... ok
+test_live_sensor_requires_sustained_high_volume_spike (test_modules.TestZScoreCorrections.test_live_sensor_requires_sustained_high_volume_spike) ... ok
+test_low_volume_spike_is_not_mislabeled_as_ddos (test_modules.TestZScoreCorrections.test_low_volume_spike_is_not_mislabeled_as_ddos) ... ok
+test_naive_baseline_absorbs_the_flood (test_modules.TestZScoreCorrections.test_naive_baseline_absorbs_the_flood) ... ok
+test_no_alert_before_warm_up (test_modules.TestZScoreCorrections.test_no_alert_before_warm_up) ... ok
+test_normal_traffic_raises_no_alert (test_modules.TestZScoreCorrections.test_normal_traffic_raises_no_alert) ... ok
+test_single_outlier_z_ceiling (test_modules.TestZScoreCorrections.test_single_outlier_z_ceiling) ... ok
+test_sustained_flood_is_detected_throughout (test_modules.TestZScoreCorrections.test_sustained_flood_is_detected_throughout) ... ok
+test_welford_is_stable_on_large_magnitudes (test_modules.TestZScoreCorrections.test_welford_is_stable_on_large_magnitudes) ... ok
+test_welford_matches_two_pass_variance (test_modules.TestZScoreCorrections.test_welford_matches_two_pass_variance) ... ok
+C:\Users\Anuskar\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\unittest\suite.py:166: ResourceWarning: unclosed <socket.socket fd=524, family=2, type=2, proto=0, laddr=('0.0.0.0', 60538)>
+  setUpClass()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+test_attack_technique_rollup (test_siem_api.TestSiemApi.test_attack_technique_rollup) ... ok
+test_config_endpoint_exposes_effective_policy (test_siem_api.TestSiemApi.test_config_endpoint_exposes_effective_policy) ... ok
+test_credentials_never_reach_the_dashboard (test_siem_api.TestSiemApi.test_credentials_never_reach_the_dashboard) ... C:\Users\Anuskar\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\unittest\case.py:589: ResourceWarning: unclosed <socket.socket fd=728, family=2, type=2, proto=0, laddr=('0.0.0.0', 63768)>
+  if method() is not None:
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_dashboard_is_utf8_without_broken_symbols (test_siem_api.TestSiemApi.test_dashboard_is_utf8_without_broken_symbols) ... ok
+test_json_alerts_are_ingested_with_attack_context (test_siem_api.TestSiemApi.test_json_alerts_are_ingested_with_attack_context) ... ok
+test_malformed_datagram_is_rejected_not_crashing (test_siem_api.TestSiemApi.test_malformed_datagram_is_rejected_not_crashing) ... ok
+test_packets_endpoint_returns_decoded_rows (test_siem_api.TestSiemApi.test_packets_endpoint_returns_decoded_rows) ... ok
+test_pcap_export_is_openable_by_wireshark (test_siem_api.TestSiemApi.test_pcap_export_is_openable_by_wireshark) ... ok
+test_protocol_filter (test_siem_api.TestSiemApi.test_protocol_filter) ... ok
+test_stats_endpoint_reports_live_traffic (test_siem_api.TestSiemApi.test_stats_endpoint_reports_live_traffic) ... ok
+test_brain_round_trip (test_training_and_eval.TestEvaluate.test_brain_round_trip) ... ok
+test_knn_metrics (test_training_and_eval.TestEvaluate.test_knn_metrics) ... ok
+test_payload_metrics_have_keys (test_training_and_eval.TestEvaluate.test_payload_metrics_have_keys) ... ok
+test_cic_destination_port_is_not_used_as_unique_port_count (test_training_and_eval.TestLoader.test_cic_destination_port_is_not_used_as_unique_port_count) ... ok
+test_cic_only_labels_scan_families_as_scan (test_training_and_eval.TestLoader.test_cic_only_labels_scan_families_as_scan) ... ok
+test_knn_loader (test_training_and_eval.TestLoader.test_knn_loader) ... ok
+test_missing_columns_raises (test_training_and_eval.TestLoader.test_missing_columns_raises) ... ok
+test_payload_loader (test_training_and_eval.TestLoader.test_payload_loader) ... ok
+test_kmeans_returns_k_centroids (test_training_and_eval.TestTrain.test_kmeans_returns_k_centroids) ... ok
+test_knn_keeps_rows (test_training_and_eval.TestTrain.test_knn_keeps_rows) ... ok
+test_naive_bayes_priors_sum_to_one (test_training_and_eval.TestTrain.test_naive_bayes_priors_sum_to_one) ... ok
+
+----------------------------------------------------------------------
+Ran 116 tests in 4.322s
+
+OK
+[*] KNN Initialized with 12 training samples.
+[*] KNN Initialized with 12 training samples.
+[*] KNN Initialized with 12 training samples.
+[*] Federate Learning: KNN loaded 12 external signatures.
+[*] KNN Initialized with 12 training samples.
+[*] Federate Learning: NaiveBayes loaded 46 keyword likelihoods.
+[*] KNN Initialized with 12 training samples.
+[*] KNN Initialized with 12 training samples.
+[*] Federated Learning: Z-Score restored baseline (mean=11.00 over 7 observations).
+[*] Federate Learning: KNN loaded 12 external signatures.
+[*] Federate Learning: NaiveBayes loaded 46 keyword likelihoods.
+[*] Federate Learning: K-Means loaded 3 external centroids.
+[*] Federated Learning: Bloom restored 1 indicators.
+
+[!!!] MALICIOUS PAYLOAD! Keywords: ['UNION']
+
+[!!!] DDoS DETECTED! Z-Score: 9.1 (PPS: 9000)
+
+[!!!] DDoS DETECTED! Z-Score: 9.1 (PPS: 9000)
+
+[!!!] MALICIOUS PAYLOAD! Keywords: ['UNION']
+
+[!!!] DDoS DETECTED! Z-Score: 9.1 (PPS: 9000)
+
+[!!!] DDoS DETECTED! Z-Score: 9.1 (PPS: 9000)
+
+[!!!] PORT SCAN DETECTED! (Unique Ports: 90/sec)
+
+[!!!] MALICIOUS PAYLOAD! Keywords: ['UNION']
+
+[!!!] BLACKLISTED IP DETECTED: 10.0.0.4 (Flagged)
+
+[!!!] MALICIOUS PAYLOAD! Keywords: ['UNION']
+
+[!!!] BLACKLISTED IP DETECTED: 10.0.0.66 (Blocked)
+
+[!!!] BLACKLISTED IP DETECTED: 10.0.0.66 (Flagged)
+[*] 127.0.0.1 is whitelisted - not blocking
+
+[!!!] DDoS DETECTED! Z-Score: 9.1 (PPS: 9000)
+[+] wrote C:\Users\Anuskar\AppData\Local\Temp\tmp82z3vlif\scenario.pcap (13159 packets, opens in Wireshark)
+
+    phase                 window     expected detection
+    ----------------------------------------------------------
+    baseline browsing     0-14s      no alert expected
+    port scan             15-19s     KNN -> Scan
+    SYN flood             20-27s     Z-Score -> DDoS
+    web payloads          28s        Naive Bayes -> Malicious
+    known-bad IP          29s        Bloom Filter -> Blacklisted
+[*] KNN Initialized with 12 training samples.
+[*] threat intel: 3 indicators loaded from feed.txt (est. FP rate 0.0006%)
+[!] threat intel feed not found: C:\Users\Anuskar\AppData\Local\Temp\tmp089ggelv\nope.txt
+[*] threat intel: 3 indicators loaded from feed.txt (est. FP rate 0.0006%)
+[!] ignoring bad config value for zscore_window: 'not-a-number'
+[*] config loaded from C:\Users\Anuskar\AppData\Local\Temp\tmp1oj9l_v5\c.json
+[*] KNN Initialized with 12 training samples.
+[*] KNN Initialized with 12 training samples.
+[*] KNN Initialized with 12 training samples.
+[KNN] 3 samples {'Normal': 3} (2 invalid labels/rows corrected)
+[*] KNN Initialized with 12 training samples.
+[*] KNN Initialized with 12 training samples.
+[*] KNN Initialized with 12 training samples.
+[*] KNN Initialized with 12 training samples.
+[KNN] 2 samples {'Normal': 1, 'Scan': 1}
+[*] KNN Initialized with 12 training samples.
+[*] KNN Initialized with 12 training samples.
+[KNN] 3 samples {'Normal': 2, 'Scan': 1} (2 invalid labels/rows corrected)
+[ZS ] 10 observations mean=10.90 std=1.14 peak=13
+[ZS ] 10 observations mean=10.90 std=1.14 peak=13
+[ZS ] 10 observations mean=10.90 std=1.14 peak=13
+[ZS ] 10 observations mean=10.90 std=1.14 peak=13
+[ZS ] 10 observations mean=10.90 std=1.14 peak=13
+[*] SIEM UDP Listener started on port 9999
+[*] Starting MANTIS SIEM Web Dashboard on http://localhost:8080
+[*] Press Ctrl+C to stop.
+[+] 127.0.0.1 | T1190 | MALICIOUS PAYLOAD! Keywords: ['UNION', 'SELECT']
+[+] 127.0.0.1 | T1498 | DDoS DETECTED! Z-Score: 5.10 (PPS: 9000)
+[+] 127.0.0.1 | T1046 | PORT SCAN DETECTED! (Unique Ports: 210/sec)
+[+] 127.0.0.1 | T1190 | MALICIOUS PAYLOAD! Keywords: ['UNION']
+[+] 127.0.0.1 | - | INVALID UDP PAYLOAD (Raw Binary/Port Scan detected on SIEM Listener)
+[KNN] 2 samples {'Normal': 1, 'Scan': 1}
+[+] saved C:\Users\Anuskar\AppData\Local\Temp\tmpxnnifrkb\mantis_brain_20260817_191215.json
+[*] KNN Initialized with 12 training samples.
+[KM ] 3 centroids on 6 points: [[11.0, 2.5], [225.0, 5.5], [22.5, 55.0]]
+[KNN] 4 samples {'Normal': 2, 'Scan': 2}
+[NB ] 4 payloads (mal=2 safe=2) prior=0.500

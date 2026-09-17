@@ -1,0 +1,17 @@
+payload,label
+GET /home HTTP/1.1 Host: example.com,Normal
+GET /?u=admin' UNION SELECT NULL,Malicious
+POST /comment text=nice+article,Normal
+POST /login user=admin' OR 1=1 --,Malicious
+POST /login user=alice password=hunter2,Normal
+POST /eval?x=alert(document.cookie),Malicious
+GET /search?q=<SCRIPT>alert(1)</SCRIPT>,Malicious
+GET /products?id=12,Normal
+GET /index.html HTTP/1.1,Normal
+GET /api/v1/users/42,Normal
+GET /about HTTP/1.1,Normal
+GET /api?cmd=cat /etc/passwd,Malicious
+GET /admin?action=DROP DATABASE,Malicious
+GET /search?q=hello+world,Normal
+GET /post?id=1; SLEEP(10),Malicious
+GET /?q=DROP TABLE users,Malicious

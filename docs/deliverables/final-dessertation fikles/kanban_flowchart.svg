@@ -1,0 +1,45 @@
+<svg width="800" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Definitions for arrow marker -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#333" />
+    </marker>
+  </defs>
+
+  <!-- Boxes and Text -->
+  
+  <!-- Box 1: Backlog -->
+  <rect x="20" y="60" width="120" height="80" rx="10" ry="10" fill="#e2f0d9" stroke="#548235" stroke-width="2"/>
+  <text x="80" y="105" font-family="Arial" font-size="16" font-weight="bold" fill="#333" text-anchor="middle">Backlog</text>
+
+  <!-- Arrow 1 -->
+  <line x1="140" y1="100" x2="170" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Box 2: To Do -->
+  <rect x="180" y="60" width="120" height="80" rx="10" ry="10" fill="#e2f0d9" stroke="#548235" stroke-width="2"/>
+  <text x="240" y="105" font-family="Arial" font-size="16" font-weight="bold" fill="#333" text-anchor="middle">To Do</text>
+
+  <!-- Arrow 2 -->
+  <line x1="300" y1="100" x2="330" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Box 3: In Progress -->
+  <rect x="340" y="60" width="130" height="80" rx="10" ry="10" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="405" y="95" font-family="Arial" font-size="16" font-weight="bold" fill="#333" text-anchor="middle">In Progress</text>
+  <text x="405" y="120" font-family="Arial" font-size="13" font-weight="bold" fill="#d6b656" text-anchor="middle">(WIP ≤ 2)</text>
+
+  <!-- Arrow 3 -->
+  <line x1="470" y1="100" x2="500" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Box 4: Testing -->
+  <rect x="510" y="60" width="120" height="80" rx="10" ry="10" fill="#fff2cc" stroke="#d6b656" stroke-width="2"/>
+  <text x="570" y="95" font-family="Arial" font-size="16" font-weight="bold" fill="#333" text-anchor="middle">Testing</text>
+  <text x="570" y="120" font-family="Arial" font-size="13" font-weight="bold" fill="#d6b656" text-anchor="middle">(WIP ≤ 1)</text>
+
+  <!-- Arrow 4 -->
+  <line x1="630" y1="100" x2="660" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Box 5: Done -->
+  <rect x="670" y="60" width="110" height="80" rx="10" ry="10" fill="#dae8fc" stroke="#6c8ebf" stroke-width="2"/>
+  <text x="725" y="105" font-family="Arial" font-size="16" font-weight="bold" fill="#333" text-anchor="middle">Done</text>
+
+</svg>

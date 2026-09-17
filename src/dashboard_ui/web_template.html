@@ -2,7 +2,10 @@
 <html>
 
 <head>
-    <title>MANTIS Enterprise SIEM</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="MANTIS network security monitoring dashboard">
+    <title>MANTIS | Security Operations</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -299,6 +302,99 @@
             background: rgba(239, 68, 68, 0.1);
         }
 
+        .ws-OTHER {
+            color: #94a3b8;
+        }
+
+        .wireshark-row {
+            cursor: pointer;
+        }
+
+        .wireshark-row.selected td {
+            background: rgba(59, 130, 246, 0.15);
+        }
+
+        /* Packet viewer toolbar */
+        .pkt-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .pkt-toolbar input[type="text"],
+        .pkt-toolbar select {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .pkt-toolbar input[type="text"] {
+            min-width: 240px;
+        }
+
+        .pkt-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pkt-btn:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .pkt-btn.paused {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: var(--accent-red);
+        }
+
+        .pkt-chip {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .pkt-chip b {
+            color: var(--accent-green);
+        }
+
+        .hexdump {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: #cbd5e1;
+            padding: 16px 20px;
+            margin: 0;
+            white-space: pre;
+            overflow-x: auto;
+            background: #0b0d13;
+        }
+
+        .verdict-MALICIOUS {
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
+        .verdict-BLACKLIST {
+            color: var(--accent-purple);
+            font-weight: 700;
+        }
+
         /* Document/Project View */
         .doc-view {
             max-width: 800px;
@@ -336,12 +432,837 @@
             width: 100%;
             margin-top: 10px;
         }
+
+        /* MANTIS operator console */
+        :root {
+            --bg-main: #f1f4f3;
+            --bg-nav: #0d1a20;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f7faf9;
+            --text-main: #142229;
+            --text-muted: #68777d;
+            --accent-green: #16836f;
+            --accent-blue: #266d84;
+            --accent-red: #b83b49;
+            --accent-orange: #ad6a12;
+            --accent-purple: #675a91;
+            --border-color: #dbe3e1;
+            --nav-text: #a6b4b9;
+            --nav-active: #ffffff;
+            --shadow-sm: 0 1px 2px rgba(13, 26, 32, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            background: var(--bg-main);
+        }
+
+        body {
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--bg-main);
+            color: var(--text-main);
+            min-width: 320px;
+        }
+
+        .sidebar {
+            width: 248px;
+            flex: 0 0 248px;
+            background: var(--bg-nav);
+            border-right: 0;
+            box-shadow: 8px 0 24px rgba(13, 26, 32, 0.04);
+        }
+
+        .logo-container {
+            min-height: 76px;
+            padding: 18px 22px;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .brand-mark {
+            width: 36px;
+            height: 36px;
+            position: relative;
+            border: 1px solid rgba(116, 216, 193, 0.38);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            font-family: "SFMono-Regular", Consolas, monospace;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: #126b60;
+            box-shadow: inset 0 0 0 4px #0f554f;
+        }
+
+        .brand-mark::after {
+            content: "";
+            width: 4px;
+            height: 4px;
+            position: absolute;
+            right: 2px;
+            top: 8px;
+            border-radius: 50%;
+            background: #8be0c9;
+            box-shadow: 0 0 0 2px rgba(139, 224, 201, 0.16);
+        }
+
+        .logo-container h1 {
+            color: #ffffff;
+            font-size: 16px;
+            letter-spacing: 0.08em;
+        }
+
+        .logo-subtitle {
+            margin-top: 3px;
+            color: #87949f;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.07em;
+        }
+
+        .nav-menu {
+            padding: 24px 12px;
+        }
+
+        .nav-label {
+            padding: 0 12px 10px;
+            color: #687680;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .nav-item {
+            width: 100%;
+            min-height: 42px;
+            margin: 2px 0;
+            padding: 10px 12px;
+            gap: 11px;
+            display: flex;
+            align-items: center;
+            color: var(--nav-text);
+            border: 0;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: left;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .nav-item svg {
+            width: 17px;
+            height: 17px;
+            flex: 0 0 auto;
+            stroke-width: 1.7;
+        }
+
+        .nav-item:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .nav-item.active {
+            color: var(--nav-active);
+            background: #1a2b32;
+            border-left-color: transparent;
+            box-shadow: inset 3px 0 #38a08f;
+        }
+
+        .nav-item:focus-visible {
+            outline: 2px solid #70c8b5;
+            outline-offset: 2px;
+        }
+
+        .sidebar-session {
+            margin: auto 16px 18px;
+            padding: 15px;
+            color: #98a8ae;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .session-heading {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            color: #e0e8e9;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .session-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #56bca5;
+            box-shadow: 0 0 0 3px rgba(86, 188, 165, 0.12);
+        }
+
+        .session-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 7px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .session-row strong {
+            color: #f1f5f5;
+            font-family: "SFMono-Regular", Consolas, monospace;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .main-content {
+            min-width: 0;
+        }
+
+        header {
+            min-height: 76px;
+            padding: 14px 30px;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-status {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .last-updated {
+            color: #7b888d;
+            font-family: "SFMono-Regular", Consolas, monospace;
+            font-size: 10px;
+            white-space: nowrap;
+        }
+
+        .header-copy h1 {
+            margin: 0;
+            color: var(--text-main);
+            font-size: 18px;
+            font-weight: 650;
+            letter-spacing: -0.01em;
+        }
+
+        .header-copy p {
+            margin: 4px 0 0;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .status-badge {
+            padding: 7px 11px;
+            color: var(--accent-green);
+            background: #f1f8f5;
+            border: 1px solid #cfe5dd;
+            border-radius: 999px;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0;
+        }
+
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
+            animation: none;
+        }
+
+        .tab-content {
+            padding: 26px 30px 36px;
+            scrollbar-color: #bcc6cd transparent;
+            scrollbar-width: thin;
+        }
+
+        .content-width {
+            width: 100%;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 0 0 14px;
+        }
+
+        .section-heading h2,
+        .section-heading h3 {
+            margin: 0;
+            color: var(--text-main);
+            font-size: 14px;
+            font-weight: 650;
+        }
+
+        .section-heading p {
+            margin: 4px 0 0;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .refresh-note {
+            color: #7a8791;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .metrics-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            min-height: 148px;
+            padding: 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color) !important;
+            border-radius: 9px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-header {
+            margin-bottom: 12px;
+            color: #65727d;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+        }
+
+        .card-header svg {
+            color: #83919c;
+        }
+
+        .metric-value {
+            color: #16212a;
+            font-size: 30px;
+            font-weight: 650;
+            letter-spacing: -0.035em;
+        }
+
+        .metric-unit {
+            margin-left: 3px;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .metric-meta {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 32px;
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+
+        .metric-meta .state-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-green);
+        }
+
+        .metric-meta.alert .state-dot {
+            background: var(--accent-red);
+        }
+
+        .chart-container {
+            height: 48px;
+            margin-top: 8px;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(280px, 0.82fr);
+            gap: 14px;
+            align-items: start;
+        }
+
+        .overview-grid table {
+            min-width: 640px;
+        }
+
+        .table-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 9px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 15px 18px;
+            color: var(--text-main);
+            background: #ffffff !important;
+            border-bottom: 1px solid var(--border-color) !important;
+            font-size: 12px;
+            font-weight: 650;
+        }
+
+        .table-header-split {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .table-kicker {
+            display: block;
+            margin-top: 3px;
+            color: var(--text-muted);
+            font-size: 10px;
+            font-weight: 400;
+        }
+
+        .table-scroll {
+            width: 100%;
+            overflow: auto;
+        }
+
+        table {
+            min-width: 760px;
+        }
+
+        th {
+            padding: 10px 16px;
+            color: #75828c;
+            background: #fafbfc;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+        }
+
+        td {
+            padding: 12px 16px;
+            color: #33414c;
+            border-bottom: 1px solid #edf0f2;
+            font-size: 11px;
+            line-height: 1.45;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .empty-state {
+            padding: 34px 20px !important;
+            color: #65757b;
+            text-align: center;
+            background: #fbfcfc;
+        }
+
+        .empty-state strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #34464d;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .empty-state span {
+            color: #7b898e;
+            font-size: 10px;
+        }
+
+        tr:hover td {
+            background: #f8fafb;
+        }
+
+        .mono,
+        .wireshark-row,
+        .pkt-chip,
+        .hexdump {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        }
+
+        .badge {
+            display: inline-flex;
+            min-width: 54px;
+            justify-content: center;
+            padding: 4px 7px;
+            border-radius: 4px;
+            font-size: 8px;
+            letter-spacing: 0.05em;
+        }
+
+        .bg-CRITICAL {
+            color: #9f2f3c;
+            background: #fbeff1;
+            border-color: #efcbd0;
+        }
+
+        .bg-HIGH {
+            color: #8c570f;
+            background: #fdf5e9;
+            border-color: #ecd5b5;
+        }
+
+        .bg-SCAN {
+            color: #5c4f85;
+            background: #f1eff7;
+            border-color: #d7d1e8;
+        }
+
+        .bg-INFO {
+            color: #245b71;
+            background: #edf5f7;
+            border-color: #c9dfe6;
+        }
+
+        .engine-panel {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .engine-list {
+            padding: 4px 18px;
+        }
+
+        .engine-row {
+            display: grid;
+            grid-template-columns: 9px 1fr auto;
+            gap: 10px;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #edf0f2;
+        }
+
+        .engine-row:last-child {
+            border-bottom: 0;
+        }
+
+        .engine-marker {
+            width: 7px;
+            height: 7px;
+            border-radius: 2px;
+            background: var(--accent-blue);
+        }
+
+        .engine-marker.red { background: var(--accent-red); }
+        .engine-marker.orange { background: var(--accent-orange); }
+        .engine-marker.purple { background: var(--accent-purple); }
+
+        .engine-name {
+            color: #293640;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .engine-model {
+            margin-top: 3px;
+            color: var(--text-muted);
+            font-size: 9px;
+        }
+
+        .engine-count {
+            color: #26333d;
+            font-family: "SFMono-Regular", Consolas, monospace;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .page-intro {
+            margin-bottom: 22px;
+        }
+
+        .page-intro h2 {
+            margin: 0;
+            color: var(--text-main);
+            font-size: 19px;
+            font-weight: 650;
+            letter-spacing: -0.015em;
+        }
+
+        .page-intro p {
+            max-width: 720px;
+            margin: 6px 0 0;
+            color: var(--text-muted);
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        .pkt-toolbar {
+            gap: 8px;
+            margin-bottom: 14px;
+            padding: 12px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 7px;
+        }
+
+        .pkt-toolbar input[type="text"],
+        .pkt-toolbar select,
+        .pkt-btn {
+            min-height: 34px;
+            padding: 7px 10px;
+            color: #33414b;
+            background: #ffffff;
+            border: 1px solid #ccd4da;
+            border-radius: 5px;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 11px;
+        }
+
+        .pkt-toolbar input[type="text"] {
+            min-width: 250px;
+        }
+
+        .pkt-toolbar input:focus,
+        .pkt-toolbar select:focus {
+            border-color: #4a897f;
+            box-shadow: 0 0 0 2px rgba(23, 125, 100, 0.11);
+            outline: none;
+        }
+
+        .pkt-btn:hover {
+            background: #f4f7f8;
+        }
+
+        .pkt-btn.primary {
+            color: #ffffff !important;
+            background: #176f66;
+            border-color: #176f66 !important;
+        }
+
+        .pkt-btn.primary:hover {
+            background: #125c54;
+        }
+
+        .pkt-btn.paused {
+            color: var(--accent-red);
+            background: #fbeff1;
+            border-color: #e5aeb6;
+        }
+
+        .pkt-chip {
+            padding: 5px 2px;
+            color: #6d7a84;
+            font-size: 9px;
+        }
+
+        .pkt-chip b {
+            color: #176f66;
+        }
+
+        #pktScroll {
+            max-height: 56vh !important;
+        }
+
+        #wsTableBody {
+            background: #ffffff !important;
+        }
+
+        .wireshark-row {
+            font-size: 10px;
+        }
+
+        .wireshark-row.selected td {
+            background: #eaf3f2;
+        }
+
+        .ws-TCP { color: #34704d; }
+        .ws-UDP { color: #286b83; }
+        .ws-ICMP { color: #7b5480; }
+        .ws-OTHER { color: #697682; }
+        .ws-MALICIOUS { color: var(--accent-red); background: #fff6f7; }
+
+        .hexdump {
+            color: #d7e1e7;
+            background: #16212a;
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        .doc-view {
+            max-width: 1040px;
+            padding: 26px 30px 40px;
+            color: #46535e;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 7px;
+            font-size: 12px;
+            line-height: 1.7;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .doc-view h2 {
+            margin: 0;
+            padding-bottom: 16px;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border-color);
+            font-size: 20px;
+            font-weight: 650;
+            letter-spacing: -0.015em;
+        }
+
+        .doc-view h3 {
+            margin-top: 28px;
+            padding: 0;
+            color: #26343e;
+            border: 0;
+            font-size: 13px;
+            font-weight: 650;
+        }
+
+        .project-summary {
+            margin: 20px 0 26px;
+            padding: 14px 16px;
+            color: #28584f;
+            background: #f0f7f5;
+            border-left: 3px solid #23806f;
+        }
+
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .arch-engine {
+            min-height: 150px;
+            margin: 0;
+            padding: 16px;
+            color: #52606a;
+            background: #fafbfc;
+            border: 1px solid var(--border-color);
+            border-left: 3px solid #647f8c;
+            border-radius: 5px;
+        }
+
+        .arch-engine strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #25323c !important;
+            font-size: 12px !important;
+        }
+
+        .method-tag {
+            display: inline-block;
+            margin-bottom: 8px;
+            color: #60707b;
+            font-family: "SFMono-Regular", Consolas, monospace;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 1180px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+            body {
+                display: block;
+                height: auto;
+                min-height: 100vh;
+                overflow: auto;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-height: 0;
+                display: block;
+            }
+
+            .logo-container {
+                min-height: 64px;
+                padding: 12px 16px;
+            }
+
+            .nav-menu {
+                display: flex;
+                gap: 4px;
+                padding: 8px;
+                overflow-x: auto;
+                scrollbar-width: none;
+            }
+
+            .nav-menu::-webkit-scrollbar { display: none; }
+
+            .nav-label,
+            .sidebar-session {
+                display: none;
+            }
+
+            .nav-item {
+                width: auto;
+                flex: 0 0 auto;
+                white-space: nowrap;
+            }
+
+            .main-content {
+                min-height: calc(100vh - 122px);
+                overflow: visible;
+            }
+
+            header {
+                min-height: 62px;
+                padding: 10px 16px;
+            }
+
+            .header-copy p {
+                display: none;
+            }
+
+            .last-updated {
+                display: none;
+            }
+
+            .tab-content {
+                padding: 20px 16px 28px;
+                overflow: visible;
+            }
+
+            .metrics-grid,
+            .architecture-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pkt-toolbar input[type="text"] {
+                width: 100%;
+                min-width: 0;
+            }
+        }
     </style>
     <!-- Include Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         let allAlerts = [];
-        let packetCounter = Math.floor(Math.random() * 10000);
+
+        // --- Packet viewer state ---
+        let pktPaused = false;
+        let pktAutoScroll = true;
+        let pktProto = 'ALL';
+        let pktQuery = '';
+        let lastSeq = 0;            // highest packet no. already rendered
+        let pktCache = {};          // no -> packet (for hex detail on click)
+        const MAX_PKT_ROWS = 2000;  // cap DOM rows for smooth scrolling
 
         // Chart Instance Variables
         let cpuChart, memChart;
@@ -370,8 +1291,8 @@
                     labels: Array(maxDataPoints).fill(''),
                     datasets: [{
                         data: Array(maxDataPoints).fill(0),
-                        borderColor: '#3b82f6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderColor: '#256b86',
+                        backgroundColor: 'rgba(37, 107, 134, 0.08)',
                         fill: true
                     }]
                 },
@@ -385,8 +1306,8 @@
                     labels: Array(maxDataPoints).fill(''),
                     datasets: [{
                         data: Array(maxDataPoints).fill(0),
-                        borderColor: '#8b5cf6', // Purple for memory
-                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                        borderColor: '#675a91',
+                        backgroundColor: 'rgba(103, 90, 145, 0.08)',
                         fill: true
                     }]
                 },
@@ -396,34 +1317,149 @@
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.remove('active');
+                el.setAttribute('aria-selected', 'false');
+            });
             document.getElementById(tabId).classList.add('active');
             let navTarget = document.querySelector(`[onclick="switchTab('${tabId}')"]`);
-            if (navTarget) navTarget.classList.add('active');
+            if (navTarget) {
+                navTarget.classList.add('active');
+                navTarget.setAttribute('aria-selected', 'true');
+            }
+
+            const pageCopy = {
+                'tab-overview': ['Security overview', 'Live host health, sensor status and detection activity'],
+                'tab-packets': ['Packet capture', 'Inspect and export packets observed by the sensor'],
+                'tab-alerts': ['Threat activity', 'Review classified alerts and mapped ATT&CK techniques'],
+                'tab-architecture': ['System design', 'Technical overview of the MANTIS detection pipeline']
+            };
+            const copy = pageCopy[tabId];
+            if (copy) {
+                document.getElementById('headerTitle').textContent = copy[0];
+                document.getElementById('headerSubtitle').textContent = copy[1];
+            }
         }
 
-        function generateMockPacket() {
-            packetCounter++;
-            const protos = ['TCP', 'TCP', 'TCP', 'UDP', 'ICMP'];
-            const proto = protos[Math.floor(Math.random() * protos.length)];
-            const src = `192.168.1.${Math.floor(Math.random() * 254)}`;
-            const dest = `10.0.0.${Math.floor(Math.random() * 20)}`;
-            const srcPort = Math.floor(Math.random() * 60000) + 1024;
-            const destPort = [80, 443, 22, 53, 3306][Math.floor(Math.random() * 5)];
-            const len = Math.floor(Math.random() * 1400) + 64;
-            const time = new Date().toISOString().split('T')[1].substring(0, 12);
+        function escapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[c]));
+        }
 
-            return `
-                <tr class="wireshark-row">
-                    <td>${packetCounter}</td>
-                    <td style="color:#64748b">${time}</td>
-                    <td>${src}</td>
-                    <td>${dest}</td>
-                    <td class="ws-${proto}">${proto}</td>
-                    <td>${len}</td>
-                    <td style="color:#64748b">${srcPort} → ${destPort} [PSH, ACK] Seq=1 Ack=1</td>
-                </tr>
-            `;
+        function packetRowHtml(p) {
+            let protoClass = 'ws-' + (['TCP', 'UDP', 'ICMP'].includes(p.proto) ? p.proto : 'OTHER');
+            if (p.verdict && p.verdict !== 'clean') protoClass = 'ws-MALICIOUS';
+            let verdictBadge = '';
+            if (p.verdict === 'MALICIOUS')
+                verdictBadge = ` <span class="verdict-MALICIOUS">[MALICIOUS]</span>`;
+            else if (p.verdict === 'BLACKLIST')
+                verdictBadge = ` <span class="verdict-BLACKLIST">[BLACKLIST]</span>`;
+
+            return `<tr class="wireshark-row" data-no="${p.no}" onclick="showPacketDetail(${p.no})">
+                <td>${p.no}</td>
+                <td style="color:#64748b">${escapeHtml(p.time)}</td>
+                <td>${escapeHtml(p.src)}</td>
+                <td>${escapeHtml(p.dst)}</td>
+                <td class="${protoClass}">${escapeHtml(p.proto)}</td>
+                <td>${p.length}</td>
+                <td style="color:#94a3b8">${escapeHtml(p.info)}${verdictBadge}</td>
+            </tr>`;
+        }
+
+        // Wireshark-style hex + ASCII dump, built from the raw hex string
+        function renderHexDump(hex) {
+            let bytes = [];
+            for (let i = 0; i < hex.length; i += 2) bytes.push(parseInt(hex.substr(i, 2), 16));
+            let out = '';
+            for (let off = 0; off < bytes.length; off += 16) {
+                let chunk = bytes.slice(off, off + 16);
+                let hexPart = chunk.map(b => b.toString(16).padStart(2, '0')).join(' ');
+                hexPart = hexPart.padEnd(16 * 3 - 1, ' ');
+                let ascii = chunk.map(b => (b >= 32 && b < 127) ? String.fromCharCode(b) : '.').join('');
+                out += off.toString(16).padStart(4, '0') + '  ' + hexPart + '  ' + escapeHtml(ascii) + '\n';
+            }
+            return out || '(no payload captured)';
+        }
+
+        function showPacketDetail(no) {
+            let p = pktCache[no];
+            if (!p) return;
+            document.querySelectorAll('.wireshark-row').forEach(r => r.classList.remove('selected'));
+            let row = document.querySelector(`.wireshark-row[data-no="${no}"]`);
+            if (row) row.classList.add('selected');
+
+            let header = `Packet #${p.no}   ${p.time}\n` +
+                `${p.src}:${p.sport}  ->  ${p.dst}:${p.dport}   ${p.proto}   ${p.length} bytes\n` +
+                `Info: ${p.info}\n` +
+                `Verdict: ${p.verdict}\n` +
+                `${'-'.repeat(58)}\n`;
+            document.getElementById('pktDetail').textContent = header + renderHexDump(p.hex || '');
+            document.getElementById('pktDetailCard').style.display = 'block';
+        }
+
+        function resetPackets() {
+            lastSeq = 0;
+            pktCache = {};
+            document.getElementById('wsTableBody').innerHTML = packetEmptyState();
+            document.getElementById('pktDetailCard').style.display = 'none';
+        }
+
+        function packetEmptyState() {
+            return `<tr><td colspan="7" class="empty-state">
+                <strong>Waiting for captured traffic</strong>
+                <span>Packets matching the current filter will appear here.</span>
+            </td></tr>`;
+        }
+
+        function setProtoFilter(v) { pktProto = v; resetPackets(); }
+        function setQueryFilter(v) { pktQuery = v.trim(); resetPackets(); }
+
+        function togglePause() {
+            pktPaused = !pktPaused;
+            let btn = document.getElementById('pktPauseBtn');
+            btn.classList.toggle('paused', pktPaused);
+            btn.innerText = pktPaused ? 'Resume' : 'Pause';
+        }
+
+        function toggleAutoScroll(cb) { pktAutoScroll = cb.checked; }
+
+        async function fetchPackets() {
+            if (pktPaused) return;
+            try {
+                let url = `/api/packets?after=${lastSeq}&limit=500&proto=${pktProto}`;
+                if (pktQuery) url += `&q=${encodeURIComponent(pktQuery)}`;
+                let data = await (await fetch(url)).json();
+                let packets = data.packets;   // newest first
+
+                document.getElementById('pktBuffered').innerText = data.buffered;
+                document.getElementById('pktTotal').innerText = data.total;
+                document.getElementById('sidebarPacketCount').innerText = data.buffered;
+
+                if (packets.length) {
+                    let tbody = document.getElementById('wsTableBody');
+                    let scroller = document.getElementById('pktScroll');
+                    let atTop = scroller.scrollTop < 40;
+
+                    let emptyRow = tbody.querySelector('.empty-state');
+                    if (emptyRow) emptyRow.closest('tr').remove();
+
+                    packets.forEach(p => { pktCache[p.no] = p; });
+                    lastSeq = Math.max(lastSeq, packets[0].no);
+
+                    tbody.insertAdjacentHTML('afterbegin', packets.map(packetRowHtml).join(''));
+
+                    // trim old rows to keep scrolling snappy
+                    while (tbody.children.length > MAX_PKT_ROWS) {
+                        let removed = tbody.lastChild;
+                        delete pktCache[removed.getAttribute('data-no')];
+                        tbody.removeChild(removed);
+                    }
+                    if (pktAutoScroll && atTop) scroller.scrollTop = 0;
+                }
+            } catch (e) {
+                document.getElementById('pktBuffered').innerText = '-';
+            }
         }
 
         async function fetchStats() {
@@ -436,6 +1472,7 @@
                 document.getElementById('cpuVal').innerText = data.cpu_usage;
                 document.getElementById('memVal').innerText = data.mem_usage;
                 document.getElementById('sensorVal').innerText = data.online_sensors;
+                document.getElementById('sidebarSensorCount').innerText = data.online_sensors;
                 document.getElementById('totalEventsVal').innerText = data.total_alerts;
 
                 // Update Graphs
@@ -455,33 +1492,39 @@
                 document.getElementById('payloadCount').innerText = data.payload_alerts;
                 document.getElementById('blacklistCount').innerText = data.blacklist_alerts;
 
+                // Live traffic telemetry (real, from the sensor)
+                document.getElementById('ppsVal').innerText = data.pps;
+                let zEl = document.getElementById('zVal');
+                zEl.innerText = data.z_score.toFixed(2);
+                zEl.style.color = data.ddos_active ? 'var(--accent-red)'
+                    : data.ddos_candidate ? 'var(--accent-orange)'
+                    : 'var(--accent-green)';
+
+                // Packet viewer live counters + protocol breakdown
+                let pc = data.proto_counts || {};
+                document.getElementById('pcTCP').innerText = pc.TCP || 0;
+                document.getElementById('pcUDP').innerText = pc.UDP || 0;
+                document.getElementById('pcICMP').innerText = pc.ICMP || 0;
+
                 // Render Recent Alerts Table (Overview Page)
                 renderAlerts('alertTableBody', 8);
 
                 // Render All Alerts Table (Alerts Page)
                 renderAlerts('fullAlertTableBody', 100);
 
-                // Inject mock packets into Wireshark view continuously (or based on events)
-                let wsTable = document.getElementById('wsTableBody');
-                if (Math.random() > 0.3) {
-                    wsTable.insertAdjacentHTML('afterbegin', generateMockPacket());
-                }
-
-                // Keep WS table trimmed
-                while (wsTable.children.length > 50) {
-                    wsTable.removeChild(wsTable.lastChild);
-                }
-
                 // Status indicator
-                document.getElementById('statusText').innerText = "TELEMETRY SECURE";
+                document.getElementById('statusText').innerText = "System operational";
                 document.getElementById('statusText').style.color = "var(--accent-green)";
                 document.querySelector('.pulse-dot').style.backgroundColor = "var(--accent-green)";
+                document.getElementById('lastUpdatedText').innerText =
+                    "Updated " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
             } catch (e) {
                 console.error("Connection lost", e);
-                document.getElementById('statusText').innerText = "CONNECTION LOST";
+                document.getElementById('statusText').innerText = "Connection unavailable";
                 document.getElementById('statusText').style.color = "var(--accent-red)";
                 document.querySelector('.pulse-dot').style.backgroundColor = "var(--accent-red)";
+                document.getElementById('lastUpdatedText').innerText = "Retrying telemetry";
             }
         }
 
@@ -490,7 +1533,10 @@
             tbody.innerHTML = '';
 
             if (allAlerts.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding: 40px; color: #64748b;">No threat events detected. Traffic is clean.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="empty-state">
+                    <strong>No threat events in this session</strong>
+                    <span>New detections will appear here automatically.</span>
+                </td></tr>`;
                 return;
             }
 
@@ -499,10 +1545,32 @@
                     alert.severity === 'HIGH' ? 'bg-HIGH' :
                         alert.message.includes("SCAN") ? 'bg-SCAN' : 'bg-INFO';
 
+                // MITRE ATT&CK enrichment, linked to the public technique page
+                let tech = '<span style="color:#475569">-</span>';
+                if (alert.technique_id && alert.technique_id !== 'N/A') {
+                    let url = 'https://attack.mitre.org/techniques/'
+                        + alert.technique_id.replace('.', '/') + '/';
+                    tech = `<a href="${url}" target="_blank" rel="noopener"
+                               class="mono" style="color:var(--accent-blue);
+                               text-decoration:none"
+                               title="${alert.technique || ''} - ${alert.tactic || ''}"
+                            >${alert.technique_id}</a>`;
+                }
+
+                let risk = Number(alert.risk_score || 0);
+                let riskColour = risk >= 8 ? 'var(--accent-red)'
+                    : risk >= 5 ? 'var(--accent-orange)' : 'var(--accent-green)';
+
+                let source = alert.src_ip
+                    ? `${alert.sensor} <span style="color:#475569">&larr;</span> ${alert.src_ip}`
+                    : alert.sensor;
+
                 let row = `<tr>
                     <td><span class="badge ${sevClass}">${alert.severity}</span></td>
                     <td class="mono" style="color:#94a3b8">${alert.time}</td>
-                    <td class="mono" style="color:var(--accent-blue)">${alert.sensor}</td>
+                    <td class="mono" style="color:var(--accent-blue)">${source}</td>
+                    <td>${tech}</td>
+                    <td class="mono" style="color:${riskColour}; font-weight:700">${risk.toFixed(1)}</td>
                     <td>${alert.message}</td>
                 </tr>`;
                 tbody.innerHTML += row;
@@ -510,13 +1578,11 @@
         }
 
         setInterval(fetchStats, 1000);
+        setInterval(fetchPackets, 800);
         window.onload = () => {
             initCharts();
-            // pre-fill Wireshark view
-            for (let i = 0; i < 15; i++) {
-                document.getElementById('wsTableBody').insertAdjacentHTML('afterbegin', generateMockPacket());
-            }
             fetchStats();
+            fetchPackets();
         };
     </script>
 </head>
@@ -526,44 +1592,44 @@
     <!-- Sidebar nav -->
     <div class="sidebar">
         <div class="logo-container">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                <polyline points="2 17 12 22 22 17"></polyline>
-                <polyline points="2 12 12 17 22 12"></polyline>
-            </svg>
+            <div class="brand-mark" aria-hidden="true">M</div>
             <div>
-                <h1>M.A.N.T.I.S.</h1>
-                <div class="logo-subtitle">Enterprise SIEM</div>
+                <h1>MANTIS</h1>
+                <div class="logo-subtitle">Network security monitor</div>
             </div>
         </div>
 
-        <div class="nav-menu">
-            <div class="nav-item active" onclick="switchTab('tab-overview')">
+        <div class="nav-menu" role="tablist" aria-label="Dashboard sections">
+            <div class="nav-label">Monitoring</div>
+            <button type="button" class="nav-item active" role="tab" aria-selected="true"
+                aria-controls="tab-overview" onclick="switchTab('tab-overview')">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <rect x="3" y="3" width="7" height="7"></rect>
                     <rect x="14" y="3" width="7" height="7"></rect>
                     <rect x="14" y="14" width="7" height="7"></rect>
                     <rect x="3" y="14" width="7" height="7"></rect>
                 </svg>
-                Infrastructure Overview
-            </div>
-            <div class="nav-item" onclick="switchTab('tab-packets')">
+                Overview
+            </button>
+            <button type="button" class="nav-item" role="tab" aria-selected="false"
+                aria-controls="tab-packets" onclick="switchTab('tab-packets')">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
                 </svg>
-                Raw Packet Viewer
-            </div>
-            <div class="nav-item" onclick="switchTab('tab-alerts')">
+                Packet capture
+            </button>
+            <button type="button" class="nav-item" role="tab" aria-selected="false"
+                aria-controls="tab-alerts" onclick="switchTab('tab-alerts')">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
                     </path>
                     <line x1="12" y1="9" x2="12" y2="13"></line>
                     <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
-                Alerts & Blacklist
-            </div>
-            <div class="nav-item" onclick="switchTab('tab-architecture')">
+                Threat activity
+            </button>
+            <button type="button" class="nav-item" role="tab" aria-selected="false"
+                aria-controls="tab-architecture" onclick="switchTab('tab-architecture')">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                     <polyline points="14 2 14 8 20 8"></polyline>
@@ -571,26 +1637,46 @@
                     <line x1="16" y1="17" x2="8" y2="17"></line>
                     <polyline points="10 9 9 9 8 9"></polyline>
                 </svg>
-                Project Overview
-            </div>
+                System design
+            </button>
+        </div>
+
+        <div class="sidebar-session" aria-label="Current monitoring session">
+            <div class="session-heading"><span class="session-dot"></span>Current session</div>
+            <div class="session-row"><span>Sensors online</span><strong id="sidebarSensorCount">0</strong></div>
+            <div class="session-row"><span>Packets buffered</span><strong id="sidebarPacketCount">0</strong></div>
         </div>
     </div>
 
     <div class="main-content">
         <header>
-            <div style="font-weight: 600; font-size: 14px; color: var(--text-muted);">DASHBOARD VIEW</div>
-            <div class="status-badge">
-                <div class="pulse-dot"></div>
-                <span id="statusText">TELEMETRY SECURE</span>
+            <div class="header-copy">
+                <h1 id="headerTitle">Security overview</h1>
+                <p id="headerSubtitle">Live host health, sensor status and detection activity</p>
+            </div>
+            <div class="header-status">
+                <span class="last-updated" id="lastUpdatedText">Waiting for telemetry</span>
+                <div class="status-badge" role="status" aria-live="polite">
+                    <div class="pulse-dot"></div>
+                    <span id="statusText">System operational</span>
+                </div>
             </div>
         </header>
 
         <!-- TAB 1: OVERVIEW -->
-        <div id="tab-overview" class="tab-content active">
+        <div id="tab-overview" class="tab-content active" role="tabpanel">
+            <div class="content-width">
+            <div class="section-heading">
+                <div>
+                    <h2>System health</h2>
+                    <p>Current resource use and monitoring coverage</p>
+                </div>
+                <div class="refresh-note">Refreshes every second</div>
+            </div>
             <div class="metrics-grid">
                 <div class="card top-acc-blue">
                     <div class="card-header" style="justify-content: space-between; align-items: center; display:flex;">
-                        <span>Host CPU Load</span>
+                        <span>Host CPU load</span>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <path d="M18 20V10"></path>
@@ -598,151 +1684,207 @@
                             <path d="M6 20V14"></path>
                         </svg>
                     </div>
-                    <div class="metric-value"><span id="cpuVal">0.0</span><span
-                            style="font-size: 14px; color: var(--text-muted); margin-left: 4px;">%</span></div>
+                    <div class="metric-value"><span id="cpuVal">0.0</span><span class="metric-unit">%</span></div>
                     <div class="chart-container">
                         <canvas id="cpuChartCanvas"></canvas>
                     </div>
                 </div>
                 <div class="card" style="border-top: 3px solid var(--accent-purple);">
                     <div class="card-header" style="justify-content: space-between; align-items: center; display:flex;">
-                        <span>Host Memory Usage</span>
+                        <span>Host memory use</span>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
                         </svg>
                     </div>
-                    <div class="metric-value"><span id="memVal">0.0</span><span
-                            style="font-size: 14px; color: var(--text-muted); margin-left: 4px;">%</span></div>
+                    <div class="metric-value"><span id="memVal">0.0</span><span class="metric-unit">%</span></div>
                     <div class="chart-container">
                         <canvas id="memChartCanvas"></canvas>
                     </div>
                 </div>
                 <div class="card top-acc-green">
-                    <div class="card-header">Active Sensors <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    <div class="card-header">Sensors online <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2">
                             <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
                         </svg></div>
                     <div class="metric-value"><span id="sensorVal">0</span></div>
+                    <div class="metric-meta"><span class="state-dot"></span>Seen within the last 60 seconds</div>
                 </div>
                 <div class="card top-acc-red">
-                    <div class="card-header">Total Threat Events <svg width="14" height="14" viewBox="0 0 24 24"
+                    <div class="card-header">Threat events <svg width="14" height="14" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2">
                             <path
                                 d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
                             </path>
                         </svg></div>
-                    <div class="metric-value" style="color: var(--accent-red);"><span id="totalEventsVal">0</span></div>
+                    <div class="metric-value"><span id="totalEventsVal">0</span></div>
+                    <div class="metric-meta alert"><span class="state-dot"></span>Current in-memory event window</div>
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+            <div class="section-heading">
+                <div>
+                    <h2>Detection activity</h2>
+                    <p>Latest classified events and engine output</p>
+                </div>
+            </div>
+            <div class="overview-grid">
                 <div class="table-card">
-                    <div class="table-header">Live Event Stream</div>
-                    <table>
+                    <div class="table-header table-header-split">
+                        <div>Recent events<span class="table-kicker">Newest detections appear first</span></div>
+                        <span class="refresh-note">LIVE</span>
+                    </div>
+                    <div class="table-scroll"><table>
                         <thead>
                             <tr>
                                 <th>Sev</th>
                                 <th>Time</th>
-                                <th>Sensor Node</th>
+                                <th>Sensor &larr; Source</th>
+                                <th>ATT&amp;CK</th>
+                                <th>Risk</th>
                                 <th>Event Details</th>
                             </tr>
                         </thead>
                         <tbody id="alertTableBody"></tbody>
-                    </table>
+                    </table></div>
                 </div>
 
-                <div class="table-card" style="padding: 20px;">
-                    <div class="table-header" style="margin: -20px -20px 20px -20px;">Detection Engine Telemetry</div>
-
-                    <div style="display: flex; flex-direction: column; gap: 16px;">
-                        <div
-                            style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                <div class="table-card engine-panel">
+                    <div class="table-header">Detection engines<span class="table-kicker">Events by analysis method</span></div>
+                    <div class="engine-list">
+                        <div class="engine-row">
+                            <span class="engine-marker red"></span>
                             <div>
-                                <div style="color: var(--accent-red); font-weight: 600;">Statistical Engine (DDoS)</div>
-                                <div style="font-size: 11px; color: var(--text-muted);">Z-Score Deviation</div>
+                                <div class="engine-name">Traffic anomaly</div>
+                                <div class="engine-model">Z-Score, DDoS detection</div>
                             </div>
-                            <div style="font-size: 20px; font-weight: 700; font-family: 'JetBrains Mono';"
-                                id="ddosCount">0</div>
+                            <div class="engine-count" id="ddosCount">0</div>
                         </div>
 
-                        <div
-                            style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                        <div class="engine-row">
+                            <span class="engine-marker orange"></span>
                             <div>
-                                <div style="color: var(--accent-orange); font-weight: 600;">Behavioral Engine (Scans)
-                                </div>
-                                <div style="font-size: 11px; color: var(--text-muted);">KNN / K-Means</div>
+                                <div class="engine-name">Scan behaviour</div>
+                                <div class="engine-model">KNN and K-Means</div>
                             </div>
-                            <div style="font-size: 20px; font-weight: 700; font-family: 'JetBrains Mono';"
-                                id="scanCount">0</div>
+                            <div class="engine-count" id="scanCount">0</div>
                         </div>
 
-                        <div
-                            style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                        <div class="engine-row">
+                            <span class="engine-marker purple"></span>
                             <div>
-                                <div style="color: var(--accent-purple); font-weight: 600;">Payload Inspection (L7)
-                                </div>
-                                <div style="font-size: 11px; color: var(--text-muted);">Naive Bayes Analysis</div>
+                                <div class="engine-name">Payload inspection</div>
+                                <div class="engine-model">Naive Bayes, application layer</div>
                             </div>
-                            <div style="font-size: 20px; font-weight: 700; font-family: 'JetBrains Mono';"
-                                id="payloadCount">0</div>
+                            <div class="engine-count" id="payloadCount">0</div>
                         </div>
 
-                        <div style="display: flex; justify-content: space-between;">
+                        <div class="engine-row">
+                            <span class="engine-marker"></span>
                             <div>
-                                <div style="color: var(--accent-blue); font-weight: 600;">Reputation Engine</div>
-                                <div style="font-size: 11px; color: var(--text-muted);">Bloom Filter Blacklist</div>
+                                <div class="engine-name">IP reputation</div>
+                                <div class="engine-model">Bloom filter blacklist</div>
                             </div>
-                            <div style="font-size: 20px; font-weight: 700; font-family: 'JetBrains Mono';"
-                                id="blacklistCount">0</div>
+                            <div class="engine-count" id="blacklistCount">0</div>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
         </div> <!-- End of tab-overview -->
 
         <!-- TAB 2: WIRESHARK PACKETS -->
-        <div id="tab-packets" class="tab-content">
-            <h2 style="margin-top:0; font-size:18px;">Raw Packet Viewer</h2>
-            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">
-                Real-time capture of Data Link layer Ethernet frames via Python raw sockets.
-            </p>
+        <div id="tab-packets" class="tab-content" role="tabpanel">
+            <div class="content-width">
+            <div class="page-intro">
+                <h2>Live packet capture</h2>
+                <p>Packets are captured through Python raw sockets and stored temporarily in memory. Select a row to inspect the frame data or export the current buffer for independent analysis.</p>
+            </div>
+
+            <div class="pkt-toolbar">
+                <input type="text" aria-label="Filter captured packets" placeholder="Filter by IP, port or packet details"
+                    oninput="setQueryFilter(this.value)">
+                <select onchange="setProtoFilter(this.value)">
+                    <option value="ALL">All protocols</option>
+                    <option value="TCP">TCP</option>
+                    <option value="UDP">UDP</option>
+                    <option value="ICMP">ICMP</option>
+                </select>
+                <button class="pkt-btn" id="pktPauseBtn" onclick="togglePause()">Pause</button>
+                <label class="pkt-btn" style="cursor:default;">
+                    <input type="checkbox" checked onchange="toggleAutoScroll(this)"> Auto-scroll
+                </label>
+                <a class="pkt-btn primary" href="/api/export.pcap" download
+                   aria-label="Export .pcap (Wireshark)"
+                   title="Download the live buffer as a libpcap file and open it in Wireshark"
+                   >Export PCAP</a>
+                <a class="pkt-btn" href="/api/export" download>Export JSON</a>
+                <span class="pkt-chip">TCP <b id="pcTCP">0</b></span>
+                <span class="pkt-chip">UDP <b id="pcUDP">0</b></span>
+                <span class="pkt-chip">ICMP <b id="pcICMP">0</b></span>
+                <span class="pkt-chip">PPS <b id="ppsVal">0</b></span>
+                <span class="pkt-chip">Z-Score <b id="zVal">0.00</b></span>
+            </div>
+
             <div class="table-card">
-                <div class="table-header" style="background: #111827; border-bottom: 2px solid var(--accent-blue);">
-                    <span style="font-family: 'JetBrains Mono'; font-size: 12px; color: var(--accent-blue);">listening
-                        on eth0 (promiscuous mode)</span>
+                <div class="table-header"
+                    style="background: #111827; border-bottom: 2px solid var(--accent-blue); display:flex; justify-content:space-between;">
+                    <span class="mono" style="font-size: 10px; color: var(--accent-blue);">AF_PACKET live capture</span>
+                    <span class="mono" style="font-size: 10px; color: var(--text-muted);">
+                        buffered <b id="pktBuffered" style="color:var(--accent-green)">0</b> /
+                        total seen <b id="pktTotal" style="color:var(--text-main)">0</b></span>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th width="5%">No.</th>
-                            <th width="12%">Time</th>
-                            <th width="15%">Source</th>
-                            <th width="15%">Destination</th>
-                            <th width="8%">Protocol</th>
-                            <th width="8%">Length</th>
-                            <th>Info</th>
-                        </tr>
-                    </thead>
-                    <tbody id="wsTableBody" style="background: #0f172a;">
-                        <!-- JS populated -->
-                    </tbody>
-                </table>
+                <div id="pktScroll" style="max-height: 55vh; overflow-y: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th width="5%">No.</th>
+                                <th width="12%">Time</th>
+                                <th width="15%">Source</th>
+                                <th width="15%">Destination</th>
+                                <th width="8%">Protocol</th>
+                                <th width="8%">Length</th>
+                                <th>Info</th>
+                            </tr>
+                        </thead>
+                        <tbody id="wsTableBody" style="background: #0f172a;">
+                            <tr><td colspan="7" class="empty-state">
+                                <strong>Waiting for captured traffic</strong>
+                                <span>Packets matching the current filter will appear here.</span>
+                            </td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="table-card" id="pktDetailCard" style="margin-top:16px; display:none;">
+                <div class="table-header">Packet detail <span class="table-kicker">Raw hexadecimal and ASCII representation</span></div>
+                <pre id="pktDetail" class="hexdump"></pre>
+            </div>
             </div>
         </div> <!-- End of tab-packets -->
 
         <!-- TAB 3: ALERTS & BLACKLIST -->
-        <div id="tab-alerts" class="tab-content">
-            <h2 style="margin-top:0; font-size:18px;">Automated Responses & Threat History</h2>
-            <div class="table-card" style="margin-top: 20px;">
-                <div class="table-header">Global Alert Log</div>
-                <div style="max-height: 600px; overflow-y: auto;">
+        <div id="tab-alerts" class="tab-content" role="tabpanel">
+            <div class="content-width">
+            <div class="page-intro">
+                <h2>Threat activity log</h2>
+                <p>Review detected events, severity classifications, source hosts, risk scores and the corresponding MITRE ATT&amp;CK technique where available.</p>
+            </div>
+            <div class="table-card">
+                <div class="table-header table-header-split">
+                    <div>All alerts<span class="table-kicker">Up to 100 recent events held in memory</span></div>
+                    <span class="refresh-note">LIVE</span>
+                </div>
+                <div class="table-scroll" style="max-height: 600px;">
                     <table>
                         <thead>
                             <tr>
                                 <th>Sev</th>
                                 <th>Time</th>
-                                <th>Sensor IP</th>
+                                <th>Sensor &larr; Source</th>
+                                <th>ATT&amp;CK</th>
+                                <th>Risk</th>
                                 <th>Message Log</th>
                             </tr>
                         </thead>
@@ -750,60 +1892,51 @@
                     </table>
                 </div>
             </div>
+            </div>
         </div> <!-- End of tab-alerts -->
 
         <!-- TAB 4: ARCHITECTURE -->
-        <div id="tab-architecture" class="tab-content">
+        <div id="tab-architecture" class="tab-content" role="tabpanel">
+            <div class="content-width">
             <div class="doc-view">
-                <h2 style="margin-top:0;">M.A.N.T.I.S. Architecture Documentation</h2>
-                <p><strong>Minimalist Alert Network for Threat Intelligence System</strong> is a Zero-Dependency
-                    Host-Based Intrusion Detection System built entirely in Python Standard Library.</p>
-
-                <h3>Project Overview: A Zero-Dependency Approach</h3>
-                <p>The core objective of M.A.N.T.I.S is to prove that advanced threat detection can be achieved from
-                    first principles, writing machine learning clustering layers entirely without tools like
-                    Scikit-Learn or Pandas. It reads packets directly at OSI Layer 2 via AF_PACKET sockets and analyzes
-                    them continuously.</p>
-
-                <h3>Core Detection Engines</h3>
-
-                <div class="arch-engine">
-                    <strong style="color: var(--accent-red); font-size: 16px;">1. Statistical Engine
-                        (Z-Score)</strong><br>
-                    Analyzes network flow density per second. By calculating running Mean and Standard Deviation
-                    (Z-score), it automatically identifies volumetric DDoS attacks (e.g., SYN Floods) when traffic
-                    spikes beyond expected statistical boundaries.
+                <h2>MANTIS system design</h2>
+                <div class="project-summary">
+                    <strong>Minimalist Alert Network for Threat Intelligence System</strong> is a host-based intrusion detection platform implemented with the Python standard library.
                 </div>
 
-                <div class="arch-engine">
-                    <strong style="color: var(--accent-orange); font-size: 16px;">2. Behavioral Engine (K-Nearest
-                        Neighbors & K-Means)</strong><br>
-                    Operates at Layer 4 to monitor port access patterns. Using custom-built KNN and unsupervised K-Means
-                    clustering algorithms without Scikit-Learn, it detects horizontal and vertical port scanning
-                    behaviors associated with reconnaissance (e.g., Nmap).
+                <h3>Design objective</h3>
+                <p>MANTIS investigates whether common threat-detection methods can be implemented from first principles with no third-party runtime packages. The sensor captures frames at OSI Layer 2 through Linux AF_PACKET sockets, extracts network features and passes them through four focused detection engines.</p>
+
+                <h3>Detection pipeline</h3>
+                <div class="architecture-grid">
+                    <div class="arch-engine">
+                        <span class="method-tag">Statistical analysis</span>
+                        <strong>Traffic anomaly detection</strong>
+                        Measures packet rate against a running mean and standard deviation. Sustained observations above the configured threshold identify possible volumetric DDoS traffic.
+                    </div>
+
+                    <div class="arch-engine">
+                        <span class="method-tag">Behavioural analysis</span>
+                        <strong>Port-scan detection</strong>
+                        Uses custom K-Nearest Neighbours and K-Means implementations to classify unusual port-access patterns associated with horizontal and vertical reconnaissance.
+                    </div>
+
+                    <div class="arch-engine">
+                        <span class="method-tag">Payload classification</span>
+                        <strong>Application-layer inspection</strong>
+                        Applies a Naive Bayes classifier to captured payload features to identify patterns associated with SQL injection and cross-site scripting attempts.
+                    </div>
+
+                    <div class="arch-engine">
+                        <span class="method-tag">Reputation lookup</span>
+                        <strong>Known malicious hosts</strong>
+                        Uses a memory-efficient Bloom filter to test source addresses against a configured blacklist before the remaining analysis is completed.
+                    </div>
                 </div>
 
-                <div class="arch-engine">
-                    <strong style="color: var(--accent-purple); font-size: 16px;">3. Payload Inspection (Naive
-                        Bayes)</strong><br>
-                    Deep Packet Inspection (DPI) at Layer 7. Parses raw packet payloads and runs text classification
-                    logic using Bayesian probability to block SQL Injection (SQLi) and Cross-Site Scripting (XSS) attack
-                    vectors before they reach the web server.
-                </div>
-
-                <div class="arch-engine">
-                    <strong style="color: var(--accent-blue); font-size: 16px;">4. Reputation Engine (Bloom
-                        Filter)</strong><br>
-                    An ultra-fast, memory-efficient probabilistic data structure used to check incoming IPs against a
-                    known malicious blacklist in <code
-                        style="background: rgba(0,0,0,0.3); padding: 2px 4px; border-radius: 4px;">O(k)</code> time
-                    complexity.
-                </div>
-
-                <h3>Active Defense Module</h3>
-                <p>When high-confidence attacks are detected, the Sensor automatically interacts with native OS
-                    firewalls (e.g., <code>iptables</code>) to sever the connection and drop future packets from the
-                    offending IP address autonomously.</p>
+                <h3>Response and reporting</h3>
+                <p>Each detection is assigned a severity and risk score, enriched with MITRE ATT&amp;CK metadata where applicable, then forwarded to the local SIEM interface. If active defence is explicitly enabled, high-confidence detections can be passed to the host firewall for blocking.</p>
+            </div>
             </div>
         </div> <!-- End of tab-architecture -->
 

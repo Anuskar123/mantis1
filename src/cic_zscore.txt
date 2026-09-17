@@ -1,0 +1,81 @@
+
+================================================================
+  MANTIS Evaluation Report
+================================================================
+  2026-07-27 20:42:53
+
+--- Z-Score (CIC-IoT2023) ---
+  Samples         : 299994
+  True  Positives : 12758
+  False Positives : 37
+  False Negatives : 280063
+  True  Negatives : 7136
+  Precision       : 0.9971
+  Recall          : 0.0436
+  Specificity     : 0.9948
+  F1              : 0.0835
+  Accuracy        : 0.0663
+  Balanced Acc.   : 0.5192
+  MCC             : 0.0290
+  Prevalence      : 0.9761 (positive-class share of this data)
+  No-skill F1     : 0.9879 (majority-positive guesser scores this)
+  [!] F1 does NOT beat the no-skill baseline on this data - read MCC / balanced accuracy instead.
+
+--- Z-Score (CIC-IoT2023, naive baseline) ---
+  Samples         : 299994
+  True  Positives : 7915
+  False Positives : 37
+  False Negatives : 284906
+  True  Negatives : 7136
+  Precision       : 0.9953
+  Recall          : 0.0270
+  Specificity     : 0.9948
+  F1              : 0.0526
+  Accuracy        : 0.0502
+  Balanced Acc.   : 0.5109
+  MCC             : 0.0208
+  Prevalence      : 0.9761 (positive-class share of this data)
+  No-skill F1     : 0.9879 (majority-positive guesser scores this)
+  [!] F1 does NOT beat the no-skill baseline on this data - read MCC / balanced accuracy instead.
+
+--- Z-Score (CIC-IoT2023, 95% benign) ---
+  Samples         : 7580
+  True  Positives : 366
+  False Positives : 2461
+  False Negatives : 11
+  True  Negatives : 4742
+  Precision       : 0.1295
+  Recall          : 0.9708
+  Specificity     : 0.6583
+  F1              : 0.2285
+  Accuracy        : 0.6739
+  Balanced Acc.   : 0.8146
+  MCC             : 0.2828
+  Prevalence      : 0.0497 (positive-class share of this data)
+  No-skill F1     : 0.0948 (majority-positive guesser scores this)
+
+--- Z-Score (CIC, 95% benign, naive) ---
+  Samples         : 7580
+  True  Positives : 174
+  False Positives : 148
+  False Negatives : 203
+  True  Negatives : 7055
+  Precision       : 0.5404
+  Recall          : 0.4615
+  Specificity     : 0.9795
+  F1              : 0.4979
+  Accuracy        : 0.9537
+  Balanced Acc.   : 0.7205
+  MCC             : 0.4754
+  Prevalence      : 0.0497 (positive-class share of this data)
+  No-skill F1     : 0.0948 (majority-positive guesser scores this)
+
+--- Summary ---
+  Engine                             Precision   Recall       F1  Bal.Acc      MCC
+  ------------------------------------------------------------------------------
+  Z-Score (CIC-IoT2023)                 0.9971   0.0436   0.0835   0.5192   0.0290
+  Z-Score (CIC-IoT2023, naive baseli    0.9953   0.0270   0.0526   0.5109   0.0208
+  Z-Score (CIC-IoT2023, 95% benign)     0.1295   0.9708   0.2285   0.8146   0.2828
+  Z-Score (CIC, 95% benign, naive)      0.5404   0.4615   0.4979   0.7205   0.4754
+
+================================================================

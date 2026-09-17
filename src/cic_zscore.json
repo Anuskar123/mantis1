@@ -1,0 +1,93 @@
+{
+  "generated_at": "2026-07-27 20:42:53",
+  "results": [
+    {
+      "engine": "Z-Score (CIC-IoT2023)",
+      "samples": 299994,
+      "threshold": 3.0,
+      "window": 30,
+      "guard_baseline": true,
+      "confusion_matrix": {
+        "tp": 12758,
+        "fp": 37,
+        "fn": 280063,
+        "tn": 7136
+      },
+      "precision": 0.9971,
+      "recall": 0.0436,
+      "specificity": 0.9948,
+      "f1": 0.0835,
+      "accuracy": 0.0663,
+      "balanced_accuracy": 0.5192,
+      "mcc": 0.029,
+      "prevalence": 0.9761,
+      "no_skill_f1": 0.9879
+    },
+    {
+      "engine": "Z-Score (CIC-IoT2023, naive baseline)",
+      "samples": 299994,
+      "threshold": 3.0,
+      "window": 30,
+      "guard_baseline": false,
+      "confusion_matrix": {
+        "tp": 7915,
+        "fp": 37,
+        "fn": 284906,
+        "tn": 7136
+      },
+      "precision": 0.9953,
+      "recall": 0.027,
+      "specificity": 0.9948,
+      "f1": 0.0526,
+      "accuracy": 0.0502,
+      "balanced_accuracy": 0.5109,
+      "mcc": 0.0208,
+      "prevalence": 0.9761,
+      "no_skill_f1": 0.9879
+    },
+    {
+      "engine": "Z-Score (CIC-IoT2023, 95% benign)",
+      "samples": 7580,
+      "threshold": 3.0,
+      "window": 30,
+      "guard_baseline": true,
+      "confusion_matrix": {
+        "tp": 366,
+        "fp": 2461,
+        "fn": 11,
+        "tn": 4742
+      },
+      "precision": 0.1295,
+      "recall": 0.9708,
+      "specificity": 0.6583,
+      "f1": 0.2285,
+      "accuracy": 0.6739,
+      "balanced_accuracy": 0.8146,
+      "mcc": 0.2828,
+      "prevalence": 0.0497,
+      "no_skill_f1": 0.0948
+    },
+    {
+      "engine": "Z-Score (CIC, 95% benign, naive)",
+      "samples": 7580,
+      "threshold": 3.0,
+      "window": 30,
+      "guard_baseline": false,
+      "confusion_matrix": {
+        "tp": 174,
+        "fp": 148,
+        "fn": 203,
+        "tn": 7055
+      },
+      "precision": 0.5404,
+      "recall": 0.4615,
+      "specificity": 0.9795,
+      "f1": 0.4979,
+      "accuracy": 0.9537,
+      "balanced_accuracy": 0.7205,
+      "mcc": 0.4754,
+      "prevalence": 0.0497,
+      "no_skill_f1": 0.0948
+    }
+  ]
+}

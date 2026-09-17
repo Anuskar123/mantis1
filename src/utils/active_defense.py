@@ -1,64 +1,106 @@
-import subprocess
 import os
+import subprocess
 
-# MANTIS Phase 7: Active Defense (IPS)
-# Automatically modifies Linux Firewall (iptables) to block attackers.
 
 class ActiveDefense:
-    def __init__(self):
-        print("[*] Active Defense Module Initialized. Ready to engage.")
-        self.blocked_ips = set()
-        self.whitelist = ['127.0.0.1', '0.0.0.0'] # Never block the host itself
-        
-    def block_ip(self, ip_address):
-        """
-        Dynamically adds an iptables rule to drop all traffic from the IP.
-        """
-        if ip_address in self.whitelist:
-            return # Safelist trigger, do not block
+    """Inserts iptables DROP rules for source addresses the engines flag.
 
-        if ip_address in self.blocked_ips:
-            return # Already blocked
-            
-        print(f"[*] ACTIVATING DEFENSE: Blocking {ip_address} in Firewall...")
-        
-        try:
-            # Command: sudo iptables -A INPUT -s <IP> -j DROP
-            # We use -I INPUT 1 to insert at the TOP of the chain (Priority)
-            cmd = ["iptables", "-I", "INPUT", "1", "-s", ip_address, "-j", "DROP"]
-            
-            # Check if we are root (euid 0)
-            if os.geteuid() != 0:
-                print(f"   [!] FAILED: Active Defense requires ROOT privileges.")
-                return False
-                
-            subprocess.run(cmd, check=True)
-            self.blocked_ips.add(ip_address)
-            print(f"   [+] SUCCESS: {ip_address} has been quarantined.")
-            return True
-            
-        except Exception as e:
-            print(f"   [!] FAILED to block IP: {e}")
+    The rule is inserted with `-I INPUT 1` so it sits at the head of the chain
+    and therefore wins over any ACCEPT rule already present; appending it would
+    leave it unreachable on a host whose policy accepts established traffic
+    early.
+
+    Whether this class is ever asked to act is decided by the AlertDispatcher
+    under the NFR-3 opt-in policy - constructing it has no side effects, so the
+    sensor can always build one and simply never enable blocking.
+    """
+
+    def __init__(self, whitelist=None, dry_run=False):
+        self.blocked_ips = set()
+        # never block ourselves, whatever an engine decides
+        self.whitelist = list(whitelist) if whitelist else ["127.0.0.1",
+                                                            "0.0.0.0"]
+        self.dry_run = dry_run
+        self.failures = 0
+        print("[*] active defense ready (whitelist: %s%s)"
+              % (", ".join(self.whitelist), ", dry-run" if dry_run else ""))
+
+    def _iptables_available(self):
+        return os.name != "nt" and hasattr(os, "geteuid")
+
+    def block_ip(self, ip):
+        if ip in self.whitelist or ip in self.blocked_ips:
             return False
 
-    def unblock_ip(self, ip_address):
-        """
-        Removes an IP from the blocklist.
-        """
-        if ip_address not in self.blocked_ips:
-            return
+        if not self._iptables_available():
+            print("   [!] iptables unavailable on this platform - skipping")
+            return False
 
+        if os.geteuid() != 0:
+            print("   [!] can't block - need root for iptables")
+            return False
+
+        if self.dry_run:
+            print("   [dry-run] would block %s" % ip)
+            self.blocked_ips.add(ip)
+            return True
+
+        print("[*] blocking", ip)
         try:
-            cmd = ["iptables", "-D", "INPUT", "-s", ip_address, "-j", "DROP"]
-            subprocess.run(cmd, check=True)
-            self.blocked_ips.remove(ip_address)
-            print(f"   [+] UNBLOCKED: {ip_address}")
+            # -I INPUT 1 puts the rule at the top so it wins
+            subprocess.run(
+                ["iptables", "-I", "INPUT", "1", "-s", ip, "-j", "DROP"],
+                check=True,
+            )
+            self.blocked_ips.add(ip)
+            print("   [+] blocked")
+            return True
         except Exception as e:
-            print(f"   [!] FAILED to unblock IP: {e}")
+            self.failures += 1
+            print("   [!] block failed:", e)
+            return False
 
-# Test
+    def unblock_ip(self, ip):
+        if ip not in self.blocked_ips:
+            return False
+        if self.dry_run:
+            self.blocked_ips.discard(ip)
+            return True
+        try:
+            subprocess.run(
+                ["iptables", "-D", "INPUT", "-s", ip, "-j", "DROP"],
+                check=True,
+            )
+            self.blocked_ips.discard(ip)
+            print("   [+] unblocked", ip)
+            return True
+        except Exception as e:
+            print("   [!] unblock failed:", e)
+            return False
+
+    def flush(self):
+        """Remove every rule this process inserted.
+
+        Called on shutdown so a demonstration leaves the host's firewall in the
+        state it was found in, rather than requiring the operator to remember
+        which addresses were dropped.
+        """
+        removed = 0
+        for ip in list(self.blocked_ips):
+            if self.unblock_ip(ip):
+                removed += 1
+        if removed:
+            print("[*] removed %d MANTIS firewall rule(s)" % removed)
+        return removed
+
+    def active_rules(self):
+        return sorted(self.blocked_ips)
+
+
 if __name__ == "__main__":
-    print("[*] Testing Active Defense Module (Mock Mode if not Root)...")
-    ips = ActiveDefense()
-    # Don't actually block localhost in testing unless you want to lose connection!
-    # ips.block_ip("1.2.3.4") 
+    # dry-run so running this file never touches the real firewall
+    d = ActiveDefense(dry_run=True)
+    print(d.block_ip("10.0.0.66"))
+    print(d.block_ip("127.0.0.1"), "(whitelisted)")
+    print("active:", d.active_rules())
+    d.flush()

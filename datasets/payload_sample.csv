@@ -1,0 +1,25 @@
+payload,label
+GET /index.html HTTP/1.1,Normal
+GET /home HTTP/1.1 Host: example.com,Normal
+POST /login user=alice password=hunter2,Normal
+GET /api/v1/users/42,Normal
+GET /search?q=hello+world,Normal
+POST /comment text=nice+article,Normal
+GET /static/main.css,Normal
+GET /favicon.ico,Normal
+GET /products?id=12,Normal
+GET /about HTTP/1.1,Normal
+POST /upload filename=cat.jpg,Normal
+GET /docs/intro.html,Normal
+GET /?id=1 UNION SELECT password FROM users --,Malicious
+GET /products.php?cat=1' UNION SELECT user FROM admin --,Malicious
+POST /login user=admin' OR 1=1 --,Malicious
+GET /search?q=<SCRIPT>alert(1)</SCRIPT>,Malicious
+GET /file?name=../../../etc/passwd,Malicious
+GET /?q=DROP TABLE users,Malicious
+GET /api?cmd=cat /etc/passwd,Malicious
+GET /post?id=1; SLEEP(10),Malicious
+GET /ad?id=1' OR 1=1#,Malicious
+POST /eval?x=alert(document.cookie),Malicious
+GET /admin?action=DROP DATABASE,Malicious
+GET /?u=admin' UNION SELECT NULL,Malicious

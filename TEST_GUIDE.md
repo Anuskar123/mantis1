@@ -1,73 +1,185 @@
 # MANTIS Testing Guide
-How to verify your system is working (and get that A+).
 
-You need **TWO Terminals** (or two VMs).
-- **Terminal A (Victim):** Running `sudo mantis`
-- **Terminal B (Attacker):** Running the attack commands below.
+Use only a machine or isolated virtual lab that you own. The commands below
+target loopback (`127.0.0.1`) so no test traffic is sent to another system.
+Keep active defence disabled unless a test explicitly covers firewall response.
 
-## Test 1: DDoS Detection (Z-Score Engine)
-**Goal:** Trigger a "Volumetric Anomaly" alert.
-**Command (Attacker):**
+## 1. Install the current build
+
 ```bash
-# Ping Flood (Simple)
-sudo ping -f <VICTIM_IP>
-
-# OR SYN Flood (Advanced - Install hping3 first)
-sudo hping3 -S --flood -p 80 <VICTIM_IP>
+cd ~/Desktop/mantis/src
+sudo ./install.sh
 ```
-**Expected Result:**
-Dashboard turns **RED**. "SYSTEM STATUS: UNDER ATTACK (DDoS)".
 
-## Test 2: Port Scan Detection (KNN Engine)
-**Goal:** Trigger a "Port Scan" alert.
-**Command (Attacker):**
+Verify the commands:
+
 ```bash
-# Stealth Syn Scan on top 100 ports
-sudo nmap -sS -p 1-100 <VICTIM_IP>
+command -v mantis
+command -v mantis-replay
+command -v mantis-demo-attacks
+sudo /usr/bin/mantis-demo-attacks --help 2>/dev/null || true
 ```
-**Expected Result:**
-Alert Log shows: `Port Scan Detected from <ATTACKER_IP> | Hit 100 Ports`.
 
-## Test 3: SQL Injection Detection (Naive Bayes Engine)
-**Goal:** Trigger a "Payload Anomaly" alert.
-**Command (Attacker):**
+## 2. Automated regression suite
+
 ```bash
-# Send a fake malicious HTTP request
-# Send a fake malicious HTTP request (Use %20 for spaces!)
-curl "http://testphp.vulnweb.com/listproducts.php?cat=1%20UNION%20SELECT%20user,password%20FROM%20users"
-
-# Alternative: Netcat Method (Guaranteed to work locally)
-# Terminal 1: nc -l -p 8080
-# Terminal 2: curl "http://127.0.0.1:8080/index.php?id=1%20UNION%20SELECT%201,2,3"
+cd ~/Desktop/mantis/src
+python3 -m unittest discover -s tests -v
 ```
-**Expected Result:**
-Alert Log shows: `Payload Anomaly (SQLi/XSS) ... Keywords: ['UNION', 'SELECT']`.
 
-## Test 4: Blacklist Detection (Bloom Filter)
-**Goal:** Trigger a "Blacklisted IP" alert.
-**Steps:**
-1.  Open `sensor.py` on the Victim machine.
-2.  Add **YOUR Attacker IP** to the `blacklist` list (Line ~115).
-3.  Restart MANTIS.
-4.  Send *any* packet (e.g., `ping <VICTIM_IP>`).
-**Expected Result:**
-Alert Log shows: `BLACKLISTED IP DETECTED: <ATTACKER_IP> (Dropped)`.
+Expected result:
 
-## Test 5: Enterprise SIEM Dashboard (Phase 8)
-**Goal:** Verify the Web-Based Dashboard receives alerts.
-**Steps:**
-1.  **VM 1 (SIEM):** Run `python3 siem.py`.
-2.  **Browser:** Open `http://localhost:8080`. You should see the login/dashboard.
-3.  **VM 2 (Sensor):** Run `sudo python3 main.py --remote <VM1_IP>`.
-4.  **Attack VM 2:** Run `curl "http://<VM2_IP>/?id=UNION SELECT"`.
-**Expected Result:**
-The alert appears **instantly** on the Web Dashboard table.
+```text
+Ran 119 tests
+OK
+```
 
-## Test 6: Advanced ML & Reporting (Phase 6/7)
-**Goal:** Verify K-Means Clustering and Report Generation.
-1.  **Run MANTIS:** `sudo mantis`
-2.  **Generate Traffic:** Browse heavy sites (Youtube/CNN) to train K-Means.
-3.  **Stop MANTIS:** Press `Ctrl+C`.
-4.  **Check Report:** Open `mantis_report.html` in your browser.
-    *   It should show a professional Incident Log.
-    *   Look for "ANOMALY DETECTED (Cluster 2)" alerts if you scanned yourself.
+The suite covers engine mathematics, zero-port scan prevention, guarded DDoS
+detection, privacy, parsing, source attribution, blocking policy, PCAP,
+replay, SIEM APIs, training and state persistence.
+
+## 3. Repeatable five-engine replay
+
+```bash
+mantis-replay --generate ~/mantis-all-engines.pcap
+mantis-replay \
+  --pcap ~/mantis-all-engines.pcap \
+  --out-json ~/mantis-all-engines-results.json
+```
+
+Expected:
+
+- Baseline window from 0-14 seconds: no alerts.
+- KNN: port scan with a non-zero unique-port count.
+- Z-Score: one guarded DDoS episode alert.
+- Naive Bayes: SQLi, XSS and traversal payload alerts.
+- K-Means: behavioural anomaly alerts.
+- Bloom Filter: known-bad source alerts marked `Flagged`.
+- Parser: zero malformed packets in the generated capture.
+
+## 4. Live dashboard test
+
+Terminal A:
+
+```bash
+mantis --mode web \
+  --ddos-min-pps 500 \
+  --ddos-consecutive 3 \
+  --alert-dedup-seconds 5
+```
+
+Open `http://127.0.0.1:8080` and wait at least 30 seconds for a normal
+baseline.
+
+Terminal B:
+
+```bash
+sudo /usr/bin/mantis-demo-attacks lo 5
+```
+
+Expected:
+
+- `PORT SCAN DETECTED` with a source IP and more than zero unique ports.
+- `DDoS DETECTED` after sustained traffic above the minimum PPS guard.
+- One `MALICIOUS PAYLOAD` event containing `UNION` and `SELECT`.
+- No duplicate payload event inside the deduplication window.
+
+## 5. Live Bloom Filter test
+
+MANTIS seeds `10.0.0.66` as a known-bad demonstration address. Send one
+spoofed packet only over loopback:
+
+```bash
+sudo hping3 -I lo -c 1 \
+  -a 10.0.0.66 \
+  -S -p 80 127.0.0.1
+```
+
+Expected with blocking disabled:
+
+```text
+BLACKLISTED IP DETECTED: 10.0.0.66 (Flagged)
+```
+
+If blocking is explicitly enabled and the firewall rule succeeds, the status
+is `Blocked`. It must never say `Blocked` merely because the Bloom Filter
+matched.
+
+## 6. Normal-traffic false-positive observation
+
+Restart MANTIS without running attacks:
+
+```bash
+mantis --mode web
+```
+
+For at least three minutes, browse ordinary local/Internet pages and leave the
+dashboard open. Record:
+
+- Observation start and end times.
+- Total packets seen.
+- Queue drops.
+- Any alerts by engine.
+
+Acceptance criteria:
+
+- No DDoS event below 500 PPS.
+- No scan event with zero unique ports.
+- No repeated identical payload alert inside five seconds.
+- Preferably zero attack alerts during the controlled normal period.
+
+## 7. Kali performance evidence
+
+Record hardware and software first:
+
+```bash
+uname -a
+python3 --version
+lscpu
+free -h
+```
+
+Find the sensor PID and collect five one-second samples:
+
+```bash
+pgrep -f '/opt/mantis/main.py'
+pidstat -p <PID> 1 5
+ps -o pid,%cpu,rss,etime,cmd -p <PID>
+```
+
+Also record the MANTIS shutdown summary:
+
+- Uptime
+- Frames decoded
+- Non-IPv4 and malformed counts
+- Queue drops
+- Alerts raised
+- Audit-log rows
+
+Do not use the dashboard's total host memory percentage as the sensor's
+process memory. Convert the `ps` RSS value from KiB to MiB by dividing by 1024.
+
+## 8. Optional active-defence test
+
+Run only inside a disposable VM you own:
+
+```bash
+sudo mantis --mode web --block --block-on blacklist
+```
+
+Use a non-whitelisted test source. Confirm that the event says `Blocked` only
+after iptables succeeds, then stop MANTIS and verify that its temporary rule is
+removed. Do not enable blocking during ordinary development or normal-traffic
+testing.
+
+## 9. Evidence to retain
+
+- Dashboard screenshots with timestamps
+- `mantis_logs.csv`
+- `mantis-all-engines.pcap`
+- `mantis-all-engines-results.json`
+- Unit-test output
+- `pidstat` and `ps` output
+- Hardware and Kali version details
+
+The PCAP, JSON and test commands make the evaluation reproducible.

@@ -1,0 +1,5 @@
+payload,label
+GET /products.php?cat=1' UNION SELECT user FROM admin --,Malicious
+GET /docs/intro.html,Normal
+GET /favicon.ico,Normal
+GET /file?name=../../../etc/passwd,Malicious

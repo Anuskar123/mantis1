@@ -1,0 +1,148 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="fig3" name="Page-1">
+    <mxGraphModel dx="1716" dy="1167" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="start" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;" value="Start" vertex="1">
+          <mxGeometry height="40" width="100" x="290" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="input_dataset" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="INPUT: labelled training&#xa;dataset (CSV / JSON)" vertex="1">
+          <mxGeometry height="50" width="180" x="250" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="train_engines" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Train applicable engines" vertex="1">
+          <mxGeometry height="50" width="160" x="260" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="save_snapshot" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="OUTPUT: mantis_brain&#xa;JSON snapshot" vertex="1">
+          <mxGeometry height="50" width="180" x="250" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="load_brain" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Load newest compatible&#xa;brain state on startup" vertex="1">
+          <mxGeometry height="50" width="180" x="250" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="input_live" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="INPUT: live frames via&#xa;AF_PACKET or offline&#xa;PCAP replay" vertex="1">
+          <mxGeometry height="60" width="190" x="245" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="parse_fields" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Parse Ethernet / IPv4 /&#xa;TCP / UDP fields" vertex="1">
+          <mxGeometry height="50" width="180" x="250" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="run_engines" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Run five detection engines" vertex="1">
+          <mxGeometry height="50" width="160" x="260" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="alert_raised" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;" value="Alert raised?" vertex="1">
+          <mxGeometry height="80" width="130" x="275" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="log_siem" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Log CSV and send&#xa;UDP / JSON to SIEM" vertex="1">
+          <mxGeometry height="50" width="160" x="480" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="render_dashboard" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Update dashboard&#xa;(HTTP :8080)" vertex="1">
+          <mxGeometry height="50" width="160" x="480" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="auto_block" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;" value="Auto-block&#xa;enabled?" vertex="1">
+          <mxGeometry height="80" width="130" x="495" y="1050" as="geometry" />
+        </mxCell>
+        <mxCell id="insert_iptables" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Insert iptables DROP rule" vertex="1">
+          <mxGeometry height="50" width="160" x="720" y="1160" as="geometry" />
+        </mxCell>
+        <mxCell id="junction" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="10" width="10" x="335" y="1215" as="geometry" />
+        </mxCell>
+        <mxCell id="sensor_running" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;" value="Sensor&#xa;running?" vertex="1">
+          <mxGeometry height="80" width="130" x="275" y="1260" as="geometry" />
+        </mxCell>
+        <mxCell id="export_brain" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="OUTPUT: export brain and&#xa;forensic report on shutdown" vertex="1">
+          <mxGeometry height="50" width="200" x="240" y="1410" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;" value="End" vertex="1">
+          <mxGeometry height="40" width="100" x="290" y="1500" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="input_dataset">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="input_dataset" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="train_engines">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="train_engines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="save_snapshot">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="save_snapshot" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="load_brain">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="load_brain" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="input_live">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="input_live" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="parse_fields">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="parse_fields" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="run_engines">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="run_engines" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="alert_raised">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9_yes" edge="1" parent="1" source="alert_raised" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="log_siem" value="YES">
+          <mxGeometry relative="1" x="-0.7" y="10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="560" y="820" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9_no" edge="1" parent="1" source="alert_raised" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="junction" value="NO">
+          <mxGeometry relative="1" x="-0.85" y="-10" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="log_siem" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="render_dashboard">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="render_dashboard" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="auto_block">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12_yes" edge="1" parent="1" source="auto_block" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="insert_iptables" value="YES">
+          <mxGeometry relative="1" x="-0.85" y="10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="800" y="1090" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12_no" edge="1" parent="1" source="auto_block" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="junction" value="NO">
+          <mxGeometry relative="1" x="-0.8" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="420" y="1090" />
+              <mxPoint x="420" y="1220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="insert_iptables" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="sensor_running">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="800" y="1300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="junction" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="sensor_running">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15_yes" edge="1" parent="1" source="sensor_running" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="input_live" value="YES">
+          <mxGeometry relative="1" x="-0.9" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="120" y="1300" />
+              <mxPoint x="120" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e15_no" edge="1" parent="1" source="sensor_running" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="export_brain" value="NO">
+          <mxGeometry relative="1" x="-0.5" y="-10" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="export_brain" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,392 @@
+<mxfile host="app.diagrams.net" pages="5">
+  <diagram id="zscore" name="Z-Score">
+    <mxGraphModel dx="1201" dy="817" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="zscore_in" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Read current PPS sample (x)" vertex="1">
+          <mxGeometry height="50" width="170" x="315" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="zscore_e_start" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="zscore_in">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="120" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zscore_b0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Apply Welford online update&lt;br&gt;(μ, σ²)" vertex="1">
+          <mxGeometry height="50" width="160" x="320" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="zscore_e0" edge="1" parent="1" source="zscore_in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="zscore_b0">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zscore_b1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Compute z = (x − μ) / σ" vertex="1">
+          <mxGeometry height="50" width="160" x="320" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="zscore_e1" edge="1" parent="1" source="zscore_b0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="zscore_b1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zscore_dia" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;fontStyle=1;" value="|z| &gt; 3?" vertex="1">
+          <mxGeometry height="80" width="160" x="320" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="zscore_e_dia" edge="1" parent="1" source="zscore_b1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="zscore_dia">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zscore_yes" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Return verdict&lt;br&gt;= DDoS" vertex="1">
+          <mxGeometry height="50" width="140" x="480" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="zscore_no" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Return verdict&lt;br&gt;= Normal" vertex="1">
+          <mxGeometry height="50" width="140" x="180" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="zscore_e_yes" edge="1" parent="1" source="zscore_dia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=10;" target="zscore_yes" value="YES">
+          <mxGeometry relative="1" x="-0.8667" y="10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="550" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zscore_e_no" edge="1" parent="1" source="zscore_dia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=10;" target="zscore_no" value="NO">
+          <mxGeometry relative="1" x="-0.8667" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="250" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zscore_e_end_yes" edge="1" parent="1" source="zscore_yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="650" />
+            </Array>
+            <mxPoint x="450" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zscore_e_end_no" edge="1" parent="1" source="zscore_no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="250" y="650" />
+            </Array>
+            <mxPoint x="350" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YNTqORfC6g44gx-RzE82-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="350" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YNTqORfC6g44gx-RzE82-2" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="350" y="620" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="knn" name="KNN">
+    <mxGraphModel dx="1201" dy="817" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="knn_in" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Read current features (f)" vertex="1">
+          <mxGeometry height="50" width="160" x="320" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="knn_e_start" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="knn_in">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="140" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="knn_b0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Compute Euclidean distances&lt;br&gt;to all training samples" vertex="1">
+          <mxGeometry height="50" width="160" x="320" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="knn_e0" edge="1" parent="1" source="knn_in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="knn_b0">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="knn_b1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Find k nearest neighbors" vertex="1">
+          <mxGeometry height="50" width="160" x="320" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="knn_e1" edge="1" parent="1" source="knn_b0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="knn_b1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="knn_b2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Calculate majority vote&lt;br&gt;for labels" vertex="1">
+          <mxGeometry height="50" width="160" x="320" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="knn_e2" edge="1" parent="1" source="knn_b1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="knn_b2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="knn_dia" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;fontStyle=1;" value="Majority == DDoS?" vertex="1">
+          <mxGeometry height="80" width="160" x="320" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="knn_e_dia" edge="1" parent="1" source="knn_b2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="knn_dia">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="knn_yes" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Return verdict&lt;br&gt;= DDoS" vertex="1">
+          <mxGeometry height="50" width="140" x="480" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="knn_no" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Return verdict&lt;br&gt;= Normal" vertex="1">
+          <mxGeometry height="50" width="140" x="180" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="knn_e_yes" edge="1" parent="1" source="knn_dia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=10;" target="knn_yes" value="YES">
+          <mxGeometry relative="1" x="-0.7333" y="10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="550" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="knn_e_no" edge="1" parent="1" source="knn_dia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=10;" target="knn_no" value="NO">
+          <mxGeometry relative="1" x="-0.7333" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="250" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="knn_e_end_yes" edge="1" parent="1" source="knn_yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="730" />
+            </Array>
+            <mxPoint x="450" y="730" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="knn_e_end_no" edge="1" parent="1" source="knn_no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="250" y="730" />
+            </Array>
+            <mxPoint x="350" y="730" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2qoT7KXXdQfY1hsQsQZ6-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="350" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Ejc7kiIz7Is_i4SRM1Ig-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="350" y="700" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="nb" name="Naive Bayes">
+    <mxGraphModel dx="1201" dy="817" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="nb_in" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Read current features (f)" vertex="1">
+          <mxGeometry height="50" width="160" x="320" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="nb_e_start" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="nb_in">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="140" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nb_b0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Calculate P(Normal | f)" vertex="1">
+          <mxGeometry height="50" width="160" x="320" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="nb_e0" edge="1" parent="1" source="nb_in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="nb_b0">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nb_b1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Calculate P(DDoS | f)" vertex="1">
+          <mxGeometry height="50" width="160" x="320" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="nb_e1" edge="1" parent="1" source="nb_b0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="nb_b1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nb_dia" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;fontStyle=1;" value="P(DDoS | f) &gt;&lt;br&gt;P(Normal | f)?" vertex="1">
+          <mxGeometry height="80" width="160" x="320" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="nb_e_dia" edge="1" parent="1" source="nb_b1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="nb_dia">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nb_yes" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Return verdict&lt;br&gt;= DDoS" vertex="1">
+          <mxGeometry height="50" width="140" x="480" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="nb_no" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Return verdict&lt;br&gt;= Normal" vertex="1">
+          <mxGeometry height="50" width="140" x="180" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="nb_e_yes" edge="1" parent="1" source="nb_dia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=10;" target="nb_yes" value="YES">
+          <mxGeometry relative="1" x="-0.8667" y="10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="550" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nb_e_no" edge="1" parent="1" source="nb_dia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=10;" target="nb_no" value="NO">
+          <mxGeometry relative="1" x="-0.7333" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="250" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nb_e_end_yes" edge="1" parent="1" source="nb_yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="650" />
+            </Array>
+            <mxPoint x="450" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nb_e_end_no" edge="1" parent="1" source="nb_no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="250" y="650" />
+            </Array>
+            <mxPoint x="350" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8l50wdrOiVM2pKAJuh1b-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="350" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="hncjmXIL7qlzqdaiZJjG-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="350" y="620" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="kmeans" name="K-Means">
+    <mxGraphModel dx="1201" dy="817" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="kmeans_in" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="INPUT current feature vector&lt;br&gt;f = (pps, unique ports)" vertex="1">
+          <mxGeometry height="50" width="190" x="305" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="kmeans_e_start" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="kmeans_in">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="140" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kmeans_b0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Find nearest centroid (C)" vertex="1">
+          <mxGeometry height="50" width="160" x="320" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="kmeans_e0" edge="1" parent="1" source="kmeans_in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="kmeans_b0">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kmeans_b1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Calculate distance d(f, C)" vertex="1">
+          <mxGeometry height="50" width="160" x="320" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="kmeans_e1" edge="1" parent="1" source="kmeans_b0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="kmeans_b1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kmeans_dia" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;fontStyle=1;" value="d(f, C) &gt;&lt;br&gt;Threshold?" vertex="1">
+          <mxGeometry height="80" width="160" x="320" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="kmeans_e_dia" edge="1" parent="1" source="kmeans_b1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="kmeans_dia">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kmeans_yes" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="OUTPUT verdict&lt;br&gt;= Anomaly" vertex="1">
+          <mxGeometry height="50" width="140" x="480" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="kmeans_no" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="OUTPUT verdict&lt;br&gt;= Normal" vertex="1">
+          <mxGeometry height="50" width="140" x="180" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="kmeans_e_yes" edge="1" parent="1" source="kmeans_dia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=10;" target="kmeans_yes" value="YES">
+          <mxGeometry relative="1" x="-0.8667" y="10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="550" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kmeans_e_no" edge="1" parent="1" source="kmeans_dia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=10;" target="kmeans_no" value="NO">
+          <mxGeometry relative="1" x="-0.8667" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="250" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kmeans_e_end_yes" edge="1" parent="1" source="kmeans_yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="650" />
+            </Array>
+            <mxPoint x="450" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kmeans_e_end_no" edge="1" parent="1" source="kmeans_no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="250" y="650" />
+            </Array>
+            <mxPoint x="350" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vp3ZAu5YdYYcvQNMCwbK-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="350" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ToMV7IR8CzBYq-Wy-jZI-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="350" y="620" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="bloom" name="Bloom Filter">
+    <mxGraphModel dx="1201" dy="817" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bloom_in" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Extract Source IP" vertex="1">
+          <mxGeometry height="50" width="160" x="320" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="bloom_e_start" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="bloom_in">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="140" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bloom_b0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Compute k hash functions&lt;br&gt;(h1, h2, ... hk)" vertex="1">
+          <mxGeometry height="50" width="160" x="320" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="bloom_e0" edge="1" parent="1" source="bloom_in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="bloom_b0">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bloom_dia" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;fontStyle=1;" value="All bits set to 1?" vertex="1">
+          <mxGeometry height="80" width="160" x="320" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="bloom_e_dia" edge="1" parent="1" source="bloom_b0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;" target="bloom_dia">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bloom_yes" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Return verdict&lt;br&gt;= DDoS" vertex="1">
+          <mxGeometry height="50" width="140" x="480" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="bloom_no" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;align=center;verticalAlign=middle;" value="Return verdict&lt;br&gt;= Normal" vertex="1">
+          <mxGeometry height="50" width="140" x="180" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="bloom_e_yes" edge="1" parent="1" source="bloom_dia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=10;" target="bloom_yes" value="YES">
+          <mxGeometry relative="1" x="-0.8654" y="10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="550" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bloom_e_no" edge="1" parent="1" source="bloom_dia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=10;" target="bloom_no" value="NO">
+          <mxGeometry relative="1" x="-0.7319" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="250" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bloom_e_end_yes" edge="1" parent="1" source="bloom_yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="570" />
+            </Array>
+            <mxPoint x="450" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bloom_e_end_no" edge="1" parent="1" source="bloom_no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="250" y="570" />
+            </Array>
+            <mxPoint x="350" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vty5wutoqGjFJqA8w-rR-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="350" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="UPhB284VoWgC91U5vN3J-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="350" y="540" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

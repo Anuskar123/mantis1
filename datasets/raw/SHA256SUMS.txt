@@ -1,0 +1,2 @@
+333831b8d60aa4f0e9dcb0343cda38dbaab397b8f54552607a2c7908215af25b  MANTIS_Raw_Dataset.zip.001
+93892ac201585ab4a3a3dfefdbcbfca3f7336a4bd1bbd0ed28384e5e1792418e  MANTIS_Raw_Dataset.zip.002

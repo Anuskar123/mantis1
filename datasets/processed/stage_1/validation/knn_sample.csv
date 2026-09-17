@@ -1,0 +1,7 @@
+unique_ports,packet_count,label
+22,130,Normal
+100,150,Scan
+13,80,Normal
+35,50,Scan
+1000,2000,Scan
+10,60,Normal

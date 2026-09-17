@@ -1,0 +1,226 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="fig2" name="Page-1">
+    <mxGraphModel dx="1069" dy="541" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="start" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;" value="Start" vertex="1">
+          <mxGeometry height="40" width="100" x="465" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="net_traffic" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Live Network Traffic&#xa;(TCP / UDP / ICMP)" vertex="1">
+          <mxGeometry height="50" width="170" x="70" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="firewall_logs" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Firewall Logs&#xa;(iptables / pfSense)" vertex="1">
+          <mxGeometry height="50" width="150" x="280" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="syslog" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Syslog / Auth.log&#xa;(OS Event Logs)" vertex="1">
+          <mxGeometry height="50" width="150" x="530" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ids_sensor" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Passive IDS Sensor&#xa;(Signature-Only, e.g. Snort)" vertex="1">
+          <mxGeometry height="50" width="170" x="780" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="siem" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="SIEM Aggregator&#xa;(e.g. Splunk / ELK Stack)&#xa;Raw log ingestion only" vertex="1">
+          <mxGeometry height="60" width="170" x="270" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="attack_window" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Extended Attack&#xa;Window&#xa;(Minutes-Hours Exposed)" vertex="1">
+          <mxGeometry height="60" width="150" x="250" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="alert_queue" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Alert Queue&#xa;(Unfiltered � High Volume)" vertex="1">
+          <mxGeometry height="50" width="180" x="495" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="fp_note" parent="1" style="text;html=1;strokeColor=#000000;fillColor=#ffffff;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontStyle=2;fontColor=#000000;" value="[!] High False-Positive Rate&#xa;No automated triage" vertex="1">
+          <mxGeometry height="40" width="160" x="670" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="manual_review" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Operator: Manually&#xa;Reviews All Alerts" vertex="1">
+          <mxGeometry height="50" width="190" x="490" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="fatigue" parent="1" style="text;html=1;strokeColor=#000000;fillColor=#ffffff;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontStyle=2;fontColor=#000000;" value="[!] Analyst Alert Fatigue&#xa;(100s of daily alerts,&#xa;most are false positives)" vertex="1">
+          <mxGeometry height="55" width="160" x="750" y="477" as="geometry" />
+        </mxCell>
+        <mxCell id="manual_corr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Manual Event Correlation&#xa;Cross-reference logs, IPs,&#xa;timestamps by hand" vertex="1">
+          <mxGeometry height="60" width="190" x="490" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="decision" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;" value="Incident&#xa;Confirmed?" vertex="1">
+          <mxGeometry height="80" width="130" x="520" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="delay_note" parent="1" style="text;html=1;strokeColor=#000000;fillColor=#ffffff;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontStyle=2;fontColor=#000000;" value="[!] Mean Detection Time:&#xa;Minutes to Hours&#xa;(Human bottleneck)" vertex="1">
+          <mxGeometry height="45" width="150" x="790" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="iptables" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Operator: Manually&#xa;Executes iptables Rule&#xa;(SSH into host)" vertex="1">
+          <mxGeometry height="60" width="180" x="300" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="passive_cont" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Continue Passive&#xa;Monitoring&#xa;(Threat may persist)" vertex="1">
+          <mxGeometry height="55" width="190" x="750" y="832" as="geometry" />
+        </mxCell>
+        <mxCell id="threat_persist" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Threat May Persist&#xa;or Exfiltrate Data&#xa;Before Block Applied" vertex="1">
+          <mxGeometry height="65" width="150" x="100" y="937" as="geometry" />
+        </mxCell>
+        <mxCell id="mitigated" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="Threat Mitigated&#xa;(After significant delay)" vertex="1">
+          <mxGeometry height="50" width="150" x="315" y="1160" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;" value="End" vertex="1">
+          <mxGeometry height="40" width="100" x="535" y="1260" as="geometry" />
+        </mxCell>
+        <mxCell id="e_start_1" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="net_traffic">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="515" y="140" />
+              <mxPoint x="155" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_start_2" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="firewall_logs">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="515" y="140" />
+              <mxPoint x="355" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_start_3" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="syslog">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="515" y="140" />
+              <mxPoint x="605" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_start_4" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="ids_sensor">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="515" y="140" />
+              <mxPoint x="865" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_nt_siem" edge="1" parent="1" source="net_traffic" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="siem">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="155" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_fl_siem" edge="1" parent="1" source="firewall_logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="siem">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="355" y="240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_sl_siem" edge="1" parent="1" source="syslog" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="siem">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="605" y="300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_siem_aw" edge="1" parent="1" source="siem" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;dashed=1;endArrow=block;endFill=1;" target="attack_window">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="320" y="400" />
+              <mxPoint x="320" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_siem_alert" edge="1" parent="1" source="siem" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="alert_queue">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="355" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_ids_alert" edge="1" parent="1" source="ids_sensor" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="alert_queue">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="865" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_alert_note" edge="1" parent="1" source="alert_queue" style="rounded=0;strokeColor=#000000;dashed=1;endArrow=none;" target="fp_note">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_alert_rev" edge="1" parent="1" source="alert_queue" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="manual_review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_rev_fat" edge="1" parent="1" source="manual_review" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;dashed=1;endArrow=none;" target="fatigue">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_rev_corr" edge="1" parent="1" source="manual_review" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="manual_corr">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_corr_dec" edge="1" parent="1" source="manual_corr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="decision">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_dec_delay" edge="1" parent="1" source="decision" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;dashed=1;endArrow=none;" target="delay_note">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_dec_ip" edge="1" parent="1" source="decision" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="iptables" value="YES">
+          <mxGeometry relative="1" x="-0.7391" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="390" y="730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_dec_pass" edge="1" parent="1" source="decision" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="passive_cont" value="NO">
+          <mxGeometry relative="1" x="-0.798" y="10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="845" y="730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_ip_tick" edge="1" parent="1" source="iptables" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="939.9999999999998" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_ip_thr" edge="1" parent="1" source="iptables" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;dashed=1;endArrow=block;endFill=1;" target="threat_persist">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="175" y="860" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_tick_post" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="999.9999999999998" as="sourcePoint" />
+            <mxPoint x="390" y="1049.9999999999998" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_post_mit" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="mitigated">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="1114.9999999999998" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_thr_mit" edge="1" parent="1" source="threat_persist" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="mitigated">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="175" y="1185" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_mit_end" edge="1" parent="1" source="mitigated" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="390" y="1280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_pass_end" edge="1" parent="1" source="passive_cont" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;endFill=1;" target="end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="845" y="1280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="77pneaifiQgY2Uhye8eV-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Create Incident Ticket&lt;br&gt;(Jira / ServiceNow)" vertex="1">
+          <mxGeometry height="60" width="170" x="300" y="939.5" as="geometry" />
+        </mxCell>
+        <mxCell id="77pneaifiQgY2Uhye8eV-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Post-Incident Report&lt;br&gt;(Written manually,&lt;br&gt;hours after breach)" vertex="1">
+          <mxGeometry height="60" width="170" x="300" y="1050" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

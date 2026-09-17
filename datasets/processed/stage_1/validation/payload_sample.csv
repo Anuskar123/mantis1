@@ -1,0 +1,5 @@
+payload,label
+GET /ad?id=1' OR 1=1#,Malicious
+GET /?id=1 UNION SELECT password FROM users --,Malicious
+POST /upload filename=cat.jpg,Normal
+GET /static/main.css,Normal

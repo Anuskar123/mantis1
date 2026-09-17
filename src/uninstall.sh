@@ -12,24 +12,20 @@ fi
 echo "[*] Starting MANTIS Uninstallation..."
 
 INSTALL_DIR="/opt/mantis"
-BIN_DIR="/usr/bin"
+BIN_DIRS="/usr/local/bin /usr/bin"
+COMMANDS="mantis mantis-siem mantis-train mantis-eval mantis-replay mantis-benchmark mantis-demo-attacks mantis-server"
 
 # 2. Remove Symlinks
-echo "[*] Removing symlinks from $BIN_DIR..."
-if [ -L "$BIN_DIR/mantis" ]; then
-    rm "$BIN_DIR/mantis"
-    echo "    - Removed mantis"
-fi
-
-if [ -L "$BIN_DIR/mantis-server" ]; then
-    rm "$BIN_DIR/mantis-server"
-    echo "    - Removed mantis-server (legacy)"
-fi
-
-if [ -L "$BIN_DIR/mantis-siem" ]; then
-    rm "$BIN_DIR/mantis-siem"
-    echo "    - Removed mantis-siem"
-fi
+for BIN_DIR in $BIN_DIRS; do
+    echo "[*] Removing MANTIS symlinks from $BIN_DIR..."
+    for COMMAND in $COMMANDS; do
+        LINK_PATH="$BIN_DIR/$COMMAND"
+        if [ -L "$LINK_PATH" ]; then
+            rm "$LINK_PATH"
+            echo "    - Removed $LINK_PATH"
+        fi
+    done
+done
 
 # 3. Remove Directory
 if [ -d "$INSTALL_DIR" ]; then

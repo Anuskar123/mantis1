@@ -1,0 +1,133 @@
+{
+  "generated_at": "2026-07-27 20:43:27",
+  "results": [
+    {
+      "engine": "KNN (Port Scan)",
+      "samples": 40,
+      "confusion_matrix": {
+        "tp": 21,
+        "fp": 0,
+        "fn": 0,
+        "tn": 19
+      },
+      "precision": 1.0,
+      "recall": 1.0,
+      "specificity": 1.0,
+      "f1": 1.0,
+      "accuracy": 1.0,
+      "balanced_accuracy": 1.0,
+      "mcc": 1.0,
+      "prevalence": 0.525,
+      "no_skill_f1": 0.6885
+    },
+    {
+      "engine": "Naive Bayes (Payload)",
+      "samples": 24,
+      "confusion_matrix": {
+        "tp": 11,
+        "fp": 0,
+        "fn": 1,
+        "tn": 12
+      },
+      "precision": 1.0,
+      "recall": 0.9167,
+      "specificity": 1.0,
+      "f1": 0.9565,
+      "accuracy": 0.9583,
+      "balanced_accuracy": 0.9583,
+      "mcc": 0.9199,
+      "prevalence": 0.5,
+      "no_skill_f1": 0.6667
+    },
+    {
+      "engine": "Z-Score (DDoS)",
+      "samples": 40,
+      "threshold": 3.0,
+      "window": 30,
+      "guard_baseline": true,
+      "confusion_matrix": {
+        "tp": 6,
+        "fp": 0,
+        "fn": 0,
+        "tn": 34
+      },
+      "precision": 1.0,
+      "recall": 1.0,
+      "specificity": 1.0,
+      "f1": 1.0,
+      "accuracy": 1.0,
+      "balanced_accuracy": 1.0,
+      "mcc": 1.0,
+      "prevalence": 0.15,
+      "no_skill_f1": 0.2609
+    },
+    {
+      "engine": "Z-Score (DDoS, naive baseline)",
+      "samples": 40,
+      "threshold": 3.0,
+      "window": 30,
+      "guard_baseline": false,
+      "confusion_matrix": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 3,
+        "tn": 34
+      },
+      "precision": 1.0,
+      "recall": 0.5,
+      "specificity": 1.0,
+      "f1": 0.6667,
+      "accuracy": 0.925,
+      "balanced_accuracy": 0.75,
+      "mcc": 0.6778,
+      "prevalence": 0.15,
+      "no_skill_f1": 0.2609
+    },
+    {
+      "engine": "K-Means (Novelty)",
+      "samples": 44,
+      "radius_multiplier": 3.0,
+      "confusion_matrix": {
+        "tp": 8,
+        "fp": 0,
+        "fn": 0,
+        "tn": 36
+      },
+      "precision": 1.0,
+      "recall": 1.0,
+      "specificity": 1.0,
+      "f1": 1.0,
+      "accuracy": 1.0,
+      "balanced_accuracy": 1.0,
+      "mcc": 1.0,
+      "prevalence": 0.1818,
+      "no_skill_f1": 0.3077
+    },
+    {
+      "engine": "Bloom Filter (Reputation)",
+      "samples": 25,
+      "indicators_loaded": 5,
+      "bit_array_size": 1000,
+      "hash_count": 3,
+      "saturation": 0.015,
+      "theoretical_fp_rate": 3e-06,
+      "confusion_matrix": {
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "tn": 20
+      },
+      "precision": 1.0,
+      "recall": 1.0,
+      "specificity": 1.0,
+      "f1": 1.0,
+      "accuracy": 1.0,
+      "balanced_accuracy": 1.0,
+      "mcc": 1.0,
+      "prevalence": 0.2,
+      "no_skill_f1": 0.3333,
+      "held_out_indicators": 5,
+      "held_out_false_hits": 0
+    }
+  ]
+}

@@ -1,0 +1,273 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="eNPU-Jrxf6PiKs3TywCM" name="Page-1">
+    <mxGraphModel dx="3902" dy="1634" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="920" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="DE" parent="1" style="swimlane;startSize=50;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=12;align=center;collapsible=0;" value="&lt;br&gt;&lt;b&gt;DetectionEngine&lt;/b&gt;" vertex="1">
+          <mxGeometry height="140" width="300" x="580" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="DE_methods" parent="DE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="+ &lt;i&gt;analyse()&lt;/i&gt; : Verdict&lt;br&gt;+ &lt;i&gt;export_brain()&lt;/i&gt; : JSON&lt;br&gt;+ &lt;i&gt;import_brain(data : JSON)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="56" width="300" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCqlzaW_31iUgk9-ZH4Q-2" edge="1" parent="DE" source="DE_methods" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=0;exitDx=0;exitDy=0;" target="DE_methods" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="10" y="84" as="sourcePoint" />
+            <mxPoint x="170" y="84" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZS" parent="1" style="swimlane;startSize=35;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=12;align=center;collapsible=0;" value="&lt;b&gt;MinimalistStats&lt;/b&gt;" vertex="1">
+          <mxGeometry height="172" width="260" x="-20" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="ZS_attrs" parent="ZS" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="- windowSize : int&lt;br&gt;- mean : float&lt;br&gt;- variance : float" vertex="1">
+          <mxGeometry height="56" width="260" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="ZS_methods" parent="ZS" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="+ update(pps : int) : void&lt;br&gt;+ calculate_baseline() : Tuple&lt;br&gt;+ analyse(pps : int) : Verdict" vertex="1">
+          <mxGeometry height="68" width="260" y="99" as="geometry" />
+        </mxCell>
+        <mxCell id="kL9H-pakNHS0im1rJcBo-1" edge="1" parent="ZS" source="ZS_attrs" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=1;exitDx=0;exitDy=0;" target="ZS_attrs" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="10" y="94" as="sourcePoint" />
+            <mxPoint x="170" y="94" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KNN" parent="1" style="swimlane;startSize=35;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=12;align=center;collapsible=0;" value="&lt;b&gt;KNNMonitor&lt;/b&gt;" vertex="1">
+          <mxGeometry height="158" width="260" x="310" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="KNN_attrs" parent="KNN" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="- k : int&lt;br&gt;- trainingData : List" vertex="1">
+          <mxGeometry height="42" width="260" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="KNN_methods" parent="KNN" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="+ analyse(ports : int, pkts : int) : Verdict&lt;br&gt;+ export_brain() : JSON&lt;br&gt;+ import_brain(data : JSON) : void" vertex="1">
+          <mxGeometry height="70" width="260" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="kL9H-pakNHS0im1rJcBo-2" edge="1" parent="KNN" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=1;exitDx=0;exitDy=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="85" as="sourcePoint" />
+            <mxPoint x="260" y="85" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NB" parent="1" style="swimlane;startSize=35;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=12;align=center;collapsible=0;" value="&lt;b&gt;PayloadMonitor&lt;/b&gt;" vertex="1">
+          <mxGeometry height="158" width="272" x="594" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="NB_attrs" parent="NB" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="- likelihoods : Map&lt;br&gt;- classPriors : Map" vertex="1">
+          <mxGeometry height="42" width="272" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="NB_methods" parent="NB" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="+ analyse(payload : bytes) : Verdict&lt;br&gt;+ export_brain() : JSON&lt;br&gt;+ import_brain(data : JSON) : void" vertex="1">
+          <mxGeometry height="70" width="272" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCqlzaW_31iUgk9-ZH4Q-3" edge="1" parent="NB" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" target="NB_attrs" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="80" as="sourcePoint" />
+            <mxPoint x="266" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KM" parent="1" style="swimlane;startSize=35;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=12;align=center;collapsible=0;" value="&lt;b&gt;KMeansMonitor&lt;/b&gt;" vertex="1">
+          <mxGeometry height="158" width="272" x="886" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="KM_attrs" parent="KM" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="- k : int&lt;br&gt;- centroids : List" vertex="1">
+          <mxGeometry height="42" width="272" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="KM_methods" parent="KM" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="+ analyse(pps : float, ports : float) : Verdict&lt;br&gt;+ export_brain() : JSON&lt;br&gt;+ import_brain(data : JSON) : void" vertex="1">
+          <mxGeometry height="70" width="272" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="kL9H-pakNHS0im1rJcBo-9" edge="1" parent="KM" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=1;exitDx=0;exitDy=0;" target="KM_methods" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="85" as="sourcePoint" />
+            <mxPoint x="260" y="85" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BL" parent="1" style="swimlane;startSize=35;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=12;align=center;collapsible=0;" value="&lt;b&gt;BloomFilter&lt;/b&gt;" vertex="1">
+          <mxGeometry height="120" width="240" x="1350" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="BL_attrs" parent="BL" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="- bitArray : List" vertex="1">
+          <mxGeometry height="24" width="240" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="BL_methods" parent="BL" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="+ check(ip : String) : boolean&lt;br&gt;+ add(ip : String) : void" vertex="1">
+          <mxGeometry height="48" width="240" y="67" as="geometry" />
+        </mxCell>
+        <mxCell id="kL9H-pakNHS0im1rJcBo-8" edge="1" parent="BL" style="endArrow=none;html=1;rounded=0;exitX=0;exitY=1;exitDx=0;exitDy=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="67" as="sourcePoint" />
+            <mxPoint x="240" y="67" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PP" parent="1" style="swimlane;startSize=35;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=12;align=center;collapsible=0;" value="&lt;b&gt;PacketParser&lt;/b&gt;" vertex="1">
+          <mxGeometry height="142" width="260" x="20" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="PP_methods" parent="PP" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="+ parse(raw : bytes)&lt;br&gt;+ stats() : Dict" vertex="1">
+          <mxGeometry height="70" width="260" y="68" as="geometry" />
+        </mxCell>
+        <mxCell id="kL9H-pakNHS0im1rJcBo-3" edge="1" parent="PP" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=1;exitDx=0;exitDy=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="68" as="sourcePoint" />
+            <mxPoint x="260" y="68" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SN" parent="1" style="swimlane;startSize=35;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=12;align=center;collapsible=0;" value="&lt;b&gt;SensorNode&lt;/b&gt;" vertex="1">
+          <mxGeometry height="200" width="290" x="410" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="SN_attrs" parent="SN" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="- packetQueue : Queue&lt;br&gt;- brainFile : String&lt;br&gt;- packetCount : int&lt;br&gt;- uniquePorts : Set" vertex="1">
+          <mxGeometry height="72" width="290" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="SN_methods" parent="SN" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="+ start() : void&lt;br&gt;+ export_brain_state() : void&lt;br&gt;+ import_brain_state() : void" vertex="1">
+          <mxGeometry height="76" width="290" y="119" as="geometry" />
+        </mxCell>
+        <mxCell id="kL9H-pakNHS0im1rJcBo-5" edge="1" parent="SN" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=1;exitDx=0;exitDy=0;" target="SN_methods" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="118.38999999999999" as="sourcePoint" />
+            <mxPoint x="260" y="118.38999999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AD" parent="1" style="swimlane;startSize=35;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=12;align=center;collapsible=0;" value="&lt;b&gt;AlertDispatcher&lt;/b&gt;" vertex="1">
+          <mxGeometry height="120" width="270" x="860" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="AD_attrs" parent="AD" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="- logPath : String" vertex="1">
+          <mxGeometry height="24" width="270" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="AD_methods" parent="AD" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="+ dispatch(alert : Alert) : Dict&lt;br&gt;+ maybe_block(ip : String, kind : String) : boolean" vertex="1">
+          <mxGeometry height="50" width="270" y="67" as="geometry" />
+        </mxCell>
+        <mxCell id="kL9H-pakNHS0im1rJcBo-6" edge="1" parent="AD" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=1;exitDx=0;exitDy=0;" target="AD_methods" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="67" as="sourcePoint" />
+            <mxPoint x="260" y="67" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ACT" parent="1" style="swimlane;startSize=35;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontSize=12;align=center;collapsible=0;" value="&lt;b&gt;ActiveDefense&lt;/b&gt;" vertex="1">
+          <mxGeometry height="110" width="240" x="1170" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="ACT_methods" parent="ACT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;fontColor=#000000;fontSize=11;" value="+ block_ip(ip : String) : void&lt;br&gt;+ unblock_ip(ip : String) : void" vertex="1">
+          <mxGeometry height="50" width="240" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="kL9H-pakNHS0im1rJcBo-7" edge="1" parent="ACT" style="endArrow=none;html=1;rounded=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="60" as="sourcePoint" />
+            <mxPoint x="240" y="60" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_ZS_DE" edge="1" parent="1" source="ZS" style="endArrow=block;endFill=0;endSize=14;strokeColor=#000000;html=1;entryX=0.008;entryY=0.129;entryDx=0;entryDy=0;entryPerimeter=0;rounded=0;curved=0;exitX=0.692;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;" target="DE">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="160" y="68" />
+            </Array>
+            <mxPoint x="170" y="280" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_KNN_DE" edge="1" parent="1" source="KNN" style="endArrow=block;endFill=0;endSize=14;strokeColor=#000000;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;rounded=0;curved=0;" target="DE_methods">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="440" y="240" />
+              <mxPoint x="440" y="176" />
+            </Array>
+            <mxPoint x="650" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_NB_DE" edge="1" parent="1" source="NB" style="endArrow=block;endFill=0;endSize=14;strokeColor=#000000;html=1;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="DE">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="262" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_KM_DE" edge="1" parent="1" source="KM" style="endArrow=block;endFill=0;endSize=14;strokeColor=#000000;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;rounded=0;curved=0;" target="DE">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1022" y="130" />
+            </Array>
+            <mxPoint x="1022" y="230" as="sourcePoint" />
+            <mxPoint x="880" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_DE" edge="1" parent="1" source="SN" style="startArrow=diamond;startFill=1;startSize=16;endArrow=none;strokeColor=#000000;html=1;edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontSize=11;fontStyle=2;rounded=0;curved=0;" target="DE" value="orchestrates ►">
+          <mxGeometry relative="1" x="0.2043" y="40" as="geometry">
+            <mxPoint y="-1" as="offset" />
+            <Array as="points">
+              <mxPoint x="300" y="710" />
+              <mxPoint x="300" y="120" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_DE_src" connectable="0" parent="r_SN_DE" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;labelBackgroundColor=#ffffff;" value="1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" y="-15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_DE_tgt" connectable="0" parent="r_SN_DE" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;labelBackgroundColor=none;" value="1..*" vertex="1">
+          <mxGeometry relative="1" x="0.8" y="-15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_PP" edge="1" parent="1" source="SN" style="startArrow=diamond;startFill=1;startSize=16;endArrow=none;strokeColor=#000000;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontSize=11;" target="PP" value="parses with">
+          <mxGeometry relative="1" x="0.0742" y="11" as="geometry">
+            <mxPoint x="-1" as="offset" />
+            <mxPoint x="410" y="760.09" as="sourcePoint" />
+            <mxPoint x="290" y="761.09" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_PP_src" connectable="0" parent="r_SN_PP" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;labelBackgroundColor=#ffffff;" value="1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" y="-15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_PP_tgt" connectable="0" parent="r_SN_PP" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;labelBackgroundColor=none;" value="1..1" vertex="1">
+          <mxGeometry relative="1" x="0.8" y="-15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_AD" edge="1" parent="1" source="SN" style="startArrow=diamond;startFill=1;startSize=16;endArrow=none;strokeColor=#000000;html=1;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=#ffffff;fontSize=11;" target="AD" value="dispatches through">
+          <mxGeometry relative="1" x="-0.125" y="10" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_AD_src" connectable="0" parent="r_SN_AD" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;labelBackgroundColor=#ffffff;" value="1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" y="-15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_AD_tgt" connectable="0" parent="r_SN_AD" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;labelBackgroundColor=none;" value="1..1" vertex="1">
+          <mxGeometry relative="1" x="0.8" y="-15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_BL" edge="1" parent="1" source="BL" style="endArrow=block;endFill=0;endSize=14;strokeColor=#000000;html=1;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;rounded=0;curved=0;" target="DE" value="">
+          <mxGeometry relative="1" x="-0.0182" y="-10" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="555" y="830" />
+              <mxPoint x="1470" y="830" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_BL_src" connectable="0" parent="r_SN_BL" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry relative="1" x="-0.8" y="-15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_BL_tgt" connectable="0" parent="r_SN_BL" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;labelBackgroundColor=none;" value="" vertex="1">
+          <mxGeometry relative="1" x="0.8" y="-15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_ACT" edge="1" parent="1" source="AD" style="endArrow=open;endFill=0;strokeColor=#000000;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;labelBackgroundColor=#ffffff;fontSize=11;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;rounded=0;curved=0;" target="ACT" value="may invoke">
+          <mxGeometry relative="1" x="-0.007" y="15" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1278" y="805" />
+            </Array>
+            <mxPoint x="1270" y="730" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_ACT_src" connectable="0" parent="r_SN_ACT" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;labelBackgroundColor=#ffffff;" value="1..1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" y="-15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_SN_ACT_tgt" connectable="0" parent="r_SN_ACT" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;labelBackgroundColor=none;" value="0..1" vertex="1">
+          <mxGeometry relative="1" x="0.8" y="-15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

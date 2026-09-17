@@ -1,0 +1,23 @@
+{
+  "source_file": "MERGED_CSV.zip",
+  "source_bytes": 1702032816,
+  "source_sha256": "7900eafc6edddd2cfae0b7ac32c62213f98babcd005a23d3fb8360c262c412e2",
+  "part_size_limit": 900000000,
+  "parts": [
+    {
+      "file": "MANTIS_Raw_Dataset.zip.001",
+      "bytes": 900000000,
+      "sha256": "333831b8d60aa4f0e9dcb0343cda38dbaab397b8f54552607a2c7908215af25b"
+    },
+    {
+      "file": "MANTIS_Raw_Dataset.zip.002",
+      "bytes": 802032816,
+      "sha256": "93892ac201585ab4a3a3dfefdbcbfca3f7336a4bd1bbd0ed28384e5e1792418e"
+    }
+  ],
+  "verification": {
+    "combined_bytes": 1702032816,
+    "combined_sha256": "7900eafc6edddd2cfae0b7ac32c62213f98babcd005a23d3fb8360c262c412e2",
+    "matches_original": true
+  }
+}

@@ -1,0 +1,5 @@
+ip,label
+10.0.0.1,Normal
+192.168.1.1,Normal
+172.16.0.13,Malicious
+10.0.0.2,Normal
